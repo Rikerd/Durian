@@ -12,6 +12,8 @@ public class GameStateManager : MonoBehaviour {
     public Text currentTurnText;
 
     public Button rollDiceButton;
+
+    public GameObject combatPromptPanel;
     
     // Game State
     [HideInInspector]
@@ -40,6 +42,8 @@ public class GameStateManager : MonoBehaviour {
         currentState = GameStates.PregameSetting;
 
         numberRolledText.text = "Rolled: -";
+
+        combatPromptPanel.SetActive(false);
 
         coroutineStarted = false;
 	}
@@ -144,6 +148,13 @@ public class GameStateManager : MonoBehaviour {
         {
             playersCurrentTile[playerIndex] = playersCurrentTile[playerIndex].GetComponent<BoardTile>().NextBoardTiles[0];
             players[playerIndex].transform.position = playersCurrentTile[playerIndex].transform.position;
+
+            foreach (GameObject player in players) {
+                if (players[playerIndex].transform.position == player.transform.position && players[playerIndex] != player)
+                {
+                    combatPromptPanel.SetActive(true);
+                }
+            }
 
             yield return new WaitForSeconds(0.2f);
         }
