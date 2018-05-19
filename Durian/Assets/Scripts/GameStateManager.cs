@@ -9,7 +9,6 @@ public class GameStateManager : MonoBehaviour {
 
     // UI VARIABLES
     public Text numberRolledText;
-    public Text currentTurnText;
 
     public Button rollDiceButton;
 
@@ -63,7 +62,6 @@ public class GameStateManager : MonoBehaviour {
                 currentState = GameStates.Player1Turn;
                 break;
             case (GameStates.Player1Turn):
-                currentTurnText.text = "Player 1 Turn";
                 rollDiceButton.enabled = true;
                 break;
             case (GameStates.Player1Move):
@@ -77,7 +75,6 @@ public class GameStateManager : MonoBehaviour {
 
                 break;
             case (GameStates.Player2Turn):
-                currentTurnText.text = "Player 2 Turn";
                 rollDiceButton.enabled = true;
                 break;
             case (GameStates.Player2Move):
@@ -91,7 +88,6 @@ public class GameStateManager : MonoBehaviour {
 
                 break;
             case (GameStates.Player3Turn):
-                currentTurnText.text = "Player 3 Turn";
                 rollDiceButton.enabled = true;
                 break;
             case (GameStates.Player3Move):
@@ -105,7 +101,6 @@ public class GameStateManager : MonoBehaviour {
 
                 break;
             case (GameStates.Player4Turn):
-                currentTurnText.text = "Player 2 Turn";
                 rollDiceButton.enabled = true;
                 break;
             case (GameStates.Player4Move):
