@@ -14,6 +14,7 @@ public class GameStateManager : MonoBehaviour {
     public Button rollDiceButton;
 
     public GameObject combatPromptPanel;
+    public Text combatPromptText;
     
     // Game State
     [HideInInspector]
@@ -21,6 +22,8 @@ public class GameStateManager : MonoBehaviour {
 
     private int numberedRolled;
     private bool coroutineStarted;
+    private bool fightAccepted;
+    private bool responded;
 
     public enum GameStates
     {
@@ -46,6 +49,10 @@ public class GameStateManager : MonoBehaviour {
         combatPromptPanel.SetActive(false);
 
         coroutineStarted = false;
+
+        fightAccepted = false;
+
+        responded = false;
 	}
 	
 	// Update is called once per frame
@@ -140,6 +147,20 @@ public class GameStateManager : MonoBehaviour {
         }
     }
 
+    public void FightAccepted()
+    {
+        responded = true;
+
+        fightAccepted = true;
+    }
+
+    public void FightDeclined()
+    {
+        responded = true;
+
+        fightAccepted = false;
+    }
+
     IEnumerator movePlayer(int playerIndex)
     {
         coroutineStarted = true;
@@ -153,6 +174,20 @@ public class GameStateManager : MonoBehaviour {
                 if (players[playerIndex].transform.position == player.transform.position && players[playerIndex] != player)
                 {
                     combatPromptPanel.SetActive(true);
+                    combatPromptText.text = "fight " + player.name + "?";
+
+                    while (!responded)
+                    {
+                        yield return null;
+                    }
+
+                    responded = false;
+                    combatPromptPanel.SetActive(false);
+
+                    if (fightAccepted)
+                    {
+                        break;
+                    }
                 }
             }
 
