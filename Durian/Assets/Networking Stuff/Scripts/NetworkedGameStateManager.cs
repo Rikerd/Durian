@@ -89,8 +89,6 @@ public class NetworkedGameStateManager : NetworkBehaviour
             case (GameStates.Player1Move):
                 numberRolledText.text = "Rolled: " + numberedRolled;
 
-                if (!isServer)
-                    return;
                 if (!coroutineStarted)
                 {
                     rollDiceButton.enabled = false;
@@ -104,8 +102,6 @@ public class NetworkedGameStateManager : NetworkBehaviour
             case (GameStates.Player2Move):
                 numberRolledText.text = "Rolled: " + numberedRolled;
 
-                if (!isServer)
-                    return;
                 if (!coroutineStarted)
                 {
                     rollDiceButton.enabled = false;
@@ -119,8 +115,6 @@ public class NetworkedGameStateManager : NetworkBehaviour
             case (GameStates.Player3Move):
                 numberRolledText.text = "Rolled: " + numberedRolled;
 
-                if (!isServer)
-                    return;
                 if (!coroutineStarted)
                 {
                     rollDiceButton.enabled = false;
@@ -134,8 +128,6 @@ public class NetworkedGameStateManager : NetworkBehaviour
             case (GameStates.Player4Move):
                 numberRolledText.text = "Rolled: " + numberedRolled;
 
-                if (!isServer)
-                    return;
                 if (!coroutineStarted)
                 {
                     rollDiceButton.enabled = false;
@@ -258,17 +250,21 @@ public class NetworkedGameStateManager : NetworkBehaviour
             case (GameStates.PregameSetting):
                 currentState = GameStates.Player1Turn;
                 break;
-            case (GameStates.Player1Turn):
+            case (GameStates.Player1Turn): //TODO: FIX THE INDEXES
                 currentState = GameStates.Player1Move;
+                numberedRolled = networkedPlayers[0].GetComponent<NetworkedPlayerController>().rolledNum;
                 break;
             case (GameStates.Player2Turn):
                 currentState = GameStates.Player2Move;
+                numberedRolled = networkedPlayers[1].GetComponent<NetworkedPlayerController>().rolledNum;
                 break;
             case (GameStates.Player3Turn):
                 currentState = GameStates.Player3Move;
+                numberedRolled = networkedPlayers[0].GetComponent<NetworkedPlayerController>().rolledNum;
                 break;
             case (GameStates.Player4Turn):
                 currentState = GameStates.Player4Move;
+                numberedRolled = networkedPlayers[1].GetComponent<NetworkedPlayerController>().rolledNum;
                 break;
         }
         print("currentState now: " + currentState);
