@@ -308,9 +308,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statLine: {fileID: 564107217}
   maxHp: 5
+  maxDef: 0
+  maxMove: 0
   hp: 0
   atk: 0
   def: 0
+  movement: 0
 --- !u!1 &129027347 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1328939970840952, guid: b189e162142849a47afa63e30dda3436,
@@ -1412,6 +1415,11 @@ Prefab:
       propertyPath: NextBoardTiles.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4873952507110642, guid: b189e162142849a47afa63e30dda3436, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1449,6 +1457,11 @@ Prefab:
       value: Blank Tile 19
       objectReference: {fileID: 0}
     - target: {fileID: 114936785159278936, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 840362714}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
         type: 2}
       propertyPath: NextBoardTiles.Array.data[0]
       value: 
@@ -1755,6 +1768,11 @@ Prefab:
       propertyPath: NextBoardTiles.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4873952507110642, guid: b189e162142849a47afa63e30dda3436, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1792,6 +1810,11 @@ Prefab:
       value: Blank Tile 16
       objectReference: {fileID: 0}
     - target: {fileID: 114936785159278936, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 475280277}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
         type: 2}
       propertyPath: NextBoardTiles.Array.data[0]
       value: 
@@ -2283,6 +2306,11 @@ Prefab:
       propertyPath: NextBoardTiles.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4873952507110642, guid: b189e162142849a47afa63e30dda3436, type: 2}
       propertyPath: m_LocalPosition.x
       value: 1
@@ -2320,6 +2348,11 @@ Prefab:
       value: Blank Tile 15
       objectReference: {fileID: 0}
     - target: {fileID: 114936785159278936, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 1571826377}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
         type: 2}
       propertyPath: NextBoardTiles.Array.data[0]
       value: 
@@ -2380,9 +2413,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statLine: {fileID: 1658360446}
   maxHp: 5
+  maxDef: 0
+  maxMove: 0
   hp: 0
   atk: 0
   def: 0
+  movement: 0
 --- !u!1 &1168819389 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1328939970840952, guid: b189e162142849a47afa63e30dda3436,
@@ -2693,6 +2729,11 @@ Prefab:
       propertyPath: NextBoardTiles.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4873952507110642, guid: b189e162142849a47afa63e30dda3436, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2730,6 +2771,11 @@ Prefab:
       value: Blank Tile 18
       objectReference: {fileID: 0}
     - target: {fileID: 114936785159278936, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 1015185500}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
         type: 2}
       propertyPath: NextBoardTiles.Array.data[0]
       value: 
@@ -2828,6 +2874,11 @@ Prefab:
       propertyPath: NextBoardTiles.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4873952507110642, guid: b189e162142849a47afa63e30dda3436, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2865,6 +2916,11 @@ Prefab:
       value: Blank Tile 17
       objectReference: {fileID: 0}
     - target: {fileID: 114936785159278936, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 796329477}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
         type: 2}
       propertyPath: NextBoardTiles.Array.data[0]
       value: 
@@ -3123,6 +3179,11 @@ MonoBehaviour:
   - {fileID: 1756931120}
   - {fileID: 1153211901}
   - {fileID: 82308315}
+  playersStats:
+  - {fileID: 1729712547}
+  - {fileID: 1756931122}
+  - {fileID: 1153211903}
+  - {fileID: 82308317}
   playersCurrentTile:
   - {fileID: 2050031977}
   - {fileID: 472180060}
@@ -3519,9 +3580,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statLine: {fileID: 1878068082}
   maxHp: 5
+  maxDef: 0
+  maxMove: 0
   hp: 0
   atk: 0
   def: 0
+  movement: 0
 --- !u!1 &1732165659
 GameObject:
   m_ObjectHideFlags: 0
@@ -3860,9 +3924,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statLine: {fileID: 1353702765}
   maxHp: 5
+  maxDef: 0
+  maxMove: 0
   hp: 0
   atk: 0
   def: 0
+  movement: 0
 --- !u!1 &1801132697
 GameObject:
   m_ObjectHideFlags: 0
@@ -3927,6 +3994,11 @@ Prefab:
       propertyPath: NextBoardTiles.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4873952507110642, guid: b189e162142849a47afa63e30dda3436, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3973,6 +4045,11 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: fa3164f3ba8a66d4483ba8040d7b80af, type: 2}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 472180060}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b189e162142849a47afa63e30dda3436, type: 2}
   m_IsPrefabParent: 0
@@ -4072,6 +4149,11 @@ Prefab:
       propertyPath: NextBoardTiles.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4873952507110642, guid: b189e162142849a47afa63e30dda3436, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4109,6 +4191,11 @@ Prefab:
       value: Blank Tile 20
       objectReference: {fileID: 0}
     - target: {fileID: 114936785159278936, guid: b189e162142849a47afa63e30dda3436,
+        type: 2}
+      propertyPath: NextBoardTiles.Array.data[0]
+      value: 
+      objectReference: {fileID: 432227543}
+    - target: {fileID: 114001785260385620, guid: b189e162142849a47afa63e30dda3436,
         type: 2}
       propertyPath: NextBoardTiles.Array.data[0]
       value: 

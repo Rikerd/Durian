@@ -7,6 +7,8 @@ public class PlayerStats : MonoBehaviour {
     public Text statLine;
 
     public int maxHp;
+    public int maxDef;
+    public int maxMove;
 
     [HideInInspector]
     public int hp;
@@ -17,19 +19,23 @@ public class PlayerStats : MonoBehaviour {
     [HideInInspector]
     public int def;
 
-	// Use this for initialization
-	void Start () {
+    [HideInInspector]
+    public int movement;
+
+    // Use this for initialization
+    void Start () {
         hp = 5;
-        atk = 1;
-        def = 1;
+        atk = 0;
+        def = 0;
+        movement = 0;
 	}
 
     private void Update()
     {
-        statLine.text = "HP: " + hp + " Atk: " + atk + " Def: " + def;
+        statLine.text = "HP: " + hp + " Atk: " + atk + " Def: " + def + " Move: " + movement;
     }
 
-    public void fullHeal()
+    public void heal()
     {
         hp = maxHp;
     }
@@ -53,5 +59,10 @@ public class PlayerStats : MonoBehaviour {
     public void increaseDef()
     {
         def++;
+    }
+
+    public void increaseMove()
+    {
+        movement++;
     }
 }

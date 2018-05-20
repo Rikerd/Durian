@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour {
     public GameObject[] players;
+    public PlayerStats[] playersStats;
     public GameObject[] playersCurrentTile;
 
     // UI VARIABLES
@@ -14,6 +15,9 @@ public class GameStateManager : MonoBehaviour {
 
     public GameObject combatPromptPanel;
     public Text combatPromptText;
+
+    public GameObject luPromptPanel;
+    public GameObject lrPromptPanel;
     
     // Game State
     [HideInInspector]
@@ -23,6 +27,7 @@ public class GameStateManager : MonoBehaviour {
     private bool coroutineStarted;
     private bool fightAccepted;
     private bool responded;
+    private bool left;
 
     public enum GameStates
     {
@@ -52,6 +57,8 @@ public class GameStateManager : MonoBehaviour {
         fightAccepted = false;
 
         responded = false;
+
+        left = false;
 	}
 	
 	// Update is called once per frame
@@ -156,20 +163,64 @@ public class GameStateManager : MonoBehaviour {
         fightAccepted = false;
     }
 
-    IEnumerator movePlayer(int playerIndex)
+    public void moveLeft()
+    {
+        responded = true;
+
+        left = true;
+
+        luPromptPanel.SetActive(false);
+        lrPromptPanel.SetActive(false);
+    }
+
+    public void moveUpOrRight()
+    {
+        responded = true;
+
+        left = false;
+
+        luPromptPanel.SetActive(false);
+        lrPromptPanel.SetActive(false);
+    }
+
+    IEnumerator movePlayer(int currentPlayerIndex)
     {
         coroutineStarted = true;
 
         for (int i = 0; i < numberedRolled; i++)
         {
-            playersCurrentTile[playerIndex] = playersCurrentTile[playerIndex].GetComponent<BoardTile>().NextBoardTiles[0];
-            players[playerIndex].transform.position = playersCurrentTile[playerIndex].transform.position;
+            BoardTile currentTile = playersCurrentTile[currentPlayerIndex].GetComponent<BoardTile>();
 
-            foreach (GameObject player in players) {
-                if (players[playerIndex].transform.position == player.transform.position && players[playerIndex] != player)
+            if (currentTile.NextBoardTiles.Length > 1)
+            {
+                currentTile.tileEffect(playersStats[currentPlayerIndex]);
+
+                while (!responded)
+                {
+                    yield return null;
+                }
+
+                if (left)
+                {
+                    playersCurrentTile[currentPlayerIndex] = currentTile.NextBoardTiles[0];
+                } else
+                {
+                    playersCurrentTile[currentPlayerIndex] = currentTile.NextBoardTiles[1];
+                }
+
+                responded = false;
+            } else
+            {
+                playersCurrentTile[currentPlayerIndex] = currentTile.NextBoardTiles[0];
+            }
+            
+            players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
+
+            for (int defendingIndex = 0; defendingIndex < players.Length; defendingIndex++) {
+                if (players[currentPlayerIndex].transform.position == players[defendingIndex].transform.position && currentPlayerIndex != defendingIndex)
                 {
                     combatPromptPanel.SetActive(true);
-                    combatPromptText.text = "fight " + player.name + "?";
+                    combatPromptText.text = "fight " + players[defendingIndex].name + "?";
 
                     while (!responded)
                     {
@@ -181,10 +232,24 @@ public class GameStateManager : MonoBehaviour {
 
                     if (fightAccepted)
                     {
+                        playersStats[defendingIndex].takeDamage(calculateDamage(currentPlayerIndex, defendingIndex));
+
+                        if (playersStats[defendingIndex].hp >= 0)
+                        {
+                            playersStats[currentPlayerIndex].takeDamage(calculateDamage(defendingIndex, currentPlayerIndex));
+                        }
+
                         break;
                     }
                 }
             }
+
+            if (fightAccepted)
+            {
+                break;
+            }
+
+            //playersCurrentTile[currentPlayerIndex].GetComponent<BoardTile>().tileEffect(playersStats[currentPlayerIndex]);
 
             yield return new WaitForSeconds(0.2f);
         }
@@ -208,5 +273,20 @@ public class GameStateManager : MonoBehaviour {
         {
             currentState = GameStates.Player1Turn;
         }
+    }
+
+    private int calculateDamage(int atkPlayerIndex, int defPlayerIndex)
+    {
+        int atkRoll = Random.Range(1, 6) + playersStats[atkPlayerIndex].atk;
+        int defRoll = Random.Range(1, 6) + playersStats[defPlayerIndex].def;
+
+        int dmgTaken = atkRoll - defRoll;
+
+        if (dmgTaken <= 0)
+        {
+            dmgTaken = 1;
+        }
+
+        return dmgTaken;
     }
 }
