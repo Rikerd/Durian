@@ -18,16 +18,20 @@ public class GameStateManager : MonoBehaviour {
 
     public GameObject luPromptPanel;
     public GameObject lrPromptPanel;
+
+    public GameObject adPromptPanel;
     
     // Game State
     [HideInInspector]
     public GameStates currentState;
 
+    private int currentPlayer;
     private int numberedRolled;
     private bool coroutineStarted;
     private bool fightAccepted;
     private bool responded;
     private bool left;
+    private bool buffPassed;
 
     public enum GameStates
     {
@@ -59,6 +63,8 @@ public class GameStateManager : MonoBehaviour {
         responded = false;
 
         left = false;
+
+        buffPassed = false;
 	}
 	
 	// Update is called once per frame
@@ -76,8 +82,9 @@ public class GameStateManager : MonoBehaviour {
                 
                 if (!coroutineStarted)
                 {
+                    currentPlayer = 0;
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer(0));
+                    StartCoroutine(movePlayer(currentPlayer));
                 }
 
                 break;
@@ -89,8 +96,9 @@ public class GameStateManager : MonoBehaviour {
 
                 if (!coroutineStarted)
                 {
+                    currentPlayer = 1;
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer(1));
+                    StartCoroutine(movePlayer(currentPlayer));
                 }
 
                 break;
@@ -102,8 +110,9 @@ public class GameStateManager : MonoBehaviour {
 
                 if (!coroutineStarted)
                 {
+                    currentPlayer = 2;
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer(2));
+                    StartCoroutine(movePlayer(currentPlayer));
                 }
 
                 break;
@@ -115,8 +124,9 @@ public class GameStateManager : MonoBehaviour {
 
                 if (!coroutineStarted)
                 {
+                    currentPlayer = 3;
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer(3));
+                    StartCoroutine(movePlayer(currentPlayer));
                 }
 
                 break;
@@ -163,7 +173,7 @@ public class GameStateManager : MonoBehaviour {
         fightAccepted = false;
     }
 
-    public void moveLeft()
+    public void MoveLeft()
     {
         responded = true;
 
@@ -173,7 +183,7 @@ public class GameStateManager : MonoBehaviour {
         lrPromptPanel.SetActive(false);
     }
 
-    public void moveUpOrRight()
+    public void MoveUpOrRight()
     {
         responded = true;
 
@@ -181,6 +191,37 @@ public class GameStateManager : MonoBehaviour {
 
         luPromptPanel.SetActive(false);
         lrPromptPanel.SetActive(false);
+    }
+
+    public void AktBuff()
+    {
+        responded = true;
+
+        buffPassed = false;
+
+        playersStats[currentPlayer].increaseAtk();
+
+        adPromptPanel.SetActive(false);
+    }
+
+    public void DefBuff()
+    {
+        responded = true;
+
+        buffPassed = false;
+
+        playersStats[currentPlayer].increaseDef();
+
+        adPromptPanel.SetActive(false);
+    }
+
+    public void Pass()
+    {
+        responded = true;
+
+        buffPassed = true;
+
+        adPromptPanel.SetActive(false);
     }
 
     IEnumerator movePlayer(int currentPlayerIndex)
@@ -249,7 +290,24 @@ public class GameStateManager : MonoBehaviour {
                 break;
             }
 
-            //playersCurrentTile[currentPlayerIndex].GetComponent<BoardTile>().tileEffect(playersStats[currentPlayerIndex]);
+            BoardTile newCurrentTile = playersCurrentTile[currentPlayerIndex].GetComponent<BoardTile>();
+
+            if (!(newCurrentTile is LUTile) && !(newCurrentTile is LRTile) && !(newCurrentTile is BlankTile))
+            {
+                newCurrentTile.tileEffect(playersStats[currentPlayerIndex]);
+
+                while (!responded)
+                {
+                    yield return null;
+                }
+
+                responded = false;
+
+                if (!buffPassed)
+                {
+                    break;
+                }
+            }
 
             yield return new WaitForSeconds(0.2f);
         }
