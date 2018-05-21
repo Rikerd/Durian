@@ -366,7 +366,7 @@ public class GameStateManager : MonoBehaviour {
 
             BoardTile newCurrentTile = playersCurrentTile[currentPlayerIndex].GetComponent<BoardTile>();
 
-            if (!(newCurrentTile is LUTile) && !(newCurrentTile is LRTile) && !(newCurrentTile is BlankTile))
+            if (!(newCurrentTile is LUTile) && !(newCurrentTile is LRTile) && !(newCurrentTile is BlankTile) && !(newCurrentTile is MonsterTile))
             {
                 newCurrentTile.tileEffect(playersStats[currentPlayerIndex]);
 
@@ -379,6 +379,32 @@ public class GameStateManager : MonoBehaviour {
 
                 if (!tileEffectPassed)
                 {
+                    break;
+                }
+            } else if (newCurrentTile is MonsterTile)
+            {
+                int monsterAtk = Random.Range(1, 6) + 4;
+
+                playersStats[currentPlayerIndex].takeDamage(monsterAtk);
+
+                if (playersStats[currentPlayerIndex].hp > 0)
+                {
+                    int monsterDef = Random.Range(1, 6) + 4;
+
+                    int playerAtk = Random.Range(1, 6) + playersStats[currentPlayerIndex].atk;
+
+                    if (monsterDef > playerAtk)
+                    {
+                        playersCurrentTile[currentPlayerIndex] = currentTile.gameObject;
+                        players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
+
+                        break;
+                    }
+                } else
+                {
+                    playersCurrentTile[currentPlayerIndex] = currentTile.gameObject;
+                    players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
+
                     break;
                 }
             }
