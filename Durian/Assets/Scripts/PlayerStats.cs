@@ -10,6 +10,8 @@ public class PlayerStats : MonoBehaviour {
     public int maxDef;
     public int maxMove;
 
+    public GameObject flag;
+
     [HideInInspector]
     public int hp;
 
@@ -22,17 +24,29 @@ public class PlayerStats : MonoBehaviour {
     [HideInInspector]
     public int movement;
 
+    [HideInInspector]
+    public bool holdingFlag;
+
     // Use this for initialization
     void Start () {
         hp = 5;
         atk = 0;
         def = 0;
         movement = 0;
+        holdingFlag = false;
 	}
 
     private void Update()
     {
         statLine.text = "HP: " + hp + " Atk: " + atk + " Def: " + def + " Move: " + movement;
+
+        if (holdingFlag)
+        {
+            flag.SetActive(true);
+        } else
+        {
+            flag.SetActive(false);
+        }
     }
 
     public void fullHeal()
@@ -76,5 +90,15 @@ public class PlayerStats : MonoBehaviour {
     public void increaseMove()
     {
         movement++;
+    }
+
+    public void grabFlag()
+    {
+        holdingFlag = true;
+    }
+
+    public void releaseFlag()
+    {
+        holdingFlag = false;
     }
 }

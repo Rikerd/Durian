@@ -9,6 +9,13 @@ public class GameStateManager : MonoBehaviour {
     public GameObject[] playersCurrentTile;
     public GameObject[] playersHomeTile;
 
+    public Renderer flag;
+    public Material avaliableFlagMat;
+    public Material unavaliableFlagMat;
+
+    public Renderer[] flagSpots;
+    public Material flagSpotMat;
+
     // UI VARIABLES
     public Text numberRolledText;
 
@@ -77,6 +84,24 @@ public class GameStateManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (FlagStatus.FlagAvaliable)
+        {
+            flag.material = avaliableFlagMat;
+
+            foreach (Renderer flagSpot in flagSpots)
+            {
+                flagSpot.material = flagSpotMat;
+            }
+        } else
+        {
+            flag.material = unavaliableFlagMat;
+
+            foreach (Renderer flagSpot in flagSpots)
+            {
+                flagSpot.material = unavaliableFlagMat;
+            }
+        }
+
 		switch (currentState)
         {
             case (GameStates.PregameSetting):
@@ -328,7 +353,7 @@ public class GameStateManager : MonoBehaviour {
             {
                 playersCurrentTile[currentPlayerIndex] = currentTile.NextBoardTiles[0];
             }
-            
+
             players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
 
             for (int defendingIndex = 0; defendingIndex < players.Length; defendingIndex++) {
@@ -366,7 +391,7 @@ public class GameStateManager : MonoBehaviour {
 
             BoardTile newCurrentTile = playersCurrentTile[currentPlayerIndex].GetComponent<BoardTile>();
 
-            if (!(newCurrentTile is LUTile) && !(newCurrentTile is LRTile) && !(newCurrentTile is BlankTile) && !(newCurrentTile is MonsterTile))
+            if ((newCurrentTile is ADTile) || (newCurrentTile is MSTile) || (newCurrentTile is HomeTile))
             {
                 newCurrentTile.tileEffect(playersStats[currentPlayerIndex]);
 
@@ -384,12 +409,14 @@ public class GameStateManager : MonoBehaviour {
             } else if (newCurrentTile is MonsterTile)
             {
                 int monsterAtk = Random.Range(1, 6) + 4;
+                //int monsterAtk = 1;
 
                 playersStats[currentPlayerIndex].takeDamage(monsterAtk);
 
                 if (playersStats[currentPlayerIndex].hp > 0)
                 {
                     int monsterDef = Random.Range(1, 6) + 4;
+                    //int monsterDef = 1;
 
                     int playerAtk = Random.Range(1, 6) + playersStats[currentPlayerIndex].atk;
 
@@ -407,6 +434,9 @@ public class GameStateManager : MonoBehaviour {
 
                     break;
                 }
+            } else if (!(newCurrentTile is LUTile) && !(newCurrentTile is LRTile))
+            {
+                newCurrentTile.tileEffect(playersStats[currentPlayerIndex]);
             }
 
             yield return new WaitForSeconds(0.2f);
