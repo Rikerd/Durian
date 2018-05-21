@@ -7,6 +7,7 @@ public class GameStateManager : MonoBehaviour {
     public GameObject[] players;
     public PlayerStats[] playersStats;
     public GameObject[] playersCurrentTile;
+    public GameObject[] playersHomeTile;
 
     // UI VARIABLES
     public Text numberRolledText;
@@ -22,6 +23,11 @@ public class GameStateManager : MonoBehaviour {
     public GameObject adPromptPanel;
 
     public GameObject movePromptPanel;
+
+    public GameObject homePromptPanel;
+    public GameObject tpPromptPanel;
+
+    public Button[] tpButtons;
     
     // Game State
     [HideInInspector]
@@ -33,7 +39,7 @@ public class GameStateManager : MonoBehaviour {
     private bool fightAccepted;
     private bool responded;
     private bool left;
-    private bool buffPassed;
+    private bool tileEffectPassed;
 
     public enum GameStates
     {
@@ -66,7 +72,7 @@ public class GameStateManager : MonoBehaviour {
 
         left = false;
 
-        buffPassed = false;
+        tileEffectPassed = false;
 	}
 	
 	// Update is called once per frame
@@ -199,7 +205,7 @@ public class GameStateManager : MonoBehaviour {
     {
         responded = true;
 
-        buffPassed = false;
+        tileEffectPassed = false;
 
         playersStats[currentPlayerIndex].increaseAtk();
 
@@ -210,7 +216,7 @@ public class GameStateManager : MonoBehaviour {
     {
         responded = true;
 
-        buffPassed = false;
+        tileEffectPassed = false;
 
         playersStats[currentPlayerIndex].increaseDef();
 
@@ -221,21 +227,75 @@ public class GameStateManager : MonoBehaviour {
     {
         responded = true;
 
-        buffPassed = false;
+        tileEffectPassed = false;
 
         playersStats[currentPlayerIndex].increaseMove();
 
         movePromptPanel.SetActive(false);
     }
 
+    public void Heal()
+    {
+        responded = true;
+
+        tileEffectPassed = false;
+
+        if (playersCurrentTile[currentPlayerIndex] == playersHomeTile[currentPlayerIndex])
+        {
+            playersStats[currentPlayerIndex].fullHeal();
+        } else
+        {
+            playersStats[currentPlayerIndex].halfHeal();
+        }
+
+        homePromptPanel.SetActive(false);
+    }
+
+    public void ActivateTp()
+    {
+        homePromptPanel.SetActive(false);
+        tpPromptPanel.SetActive(true);
+
+        for (int i = 0; i < tpButtons.Length; i++)
+        {
+            if (i == currentPlayerIndex)
+            {
+                tpButtons[i].enabled = false;
+            } else
+            {
+                tpButtons[i].enabled = true;
+            }
+        }
+    }
+
+    public void TpHome(int homeIndex)
+    {
+        responded = true;
+
+        tileEffectPassed = false;
+
+        playersCurrentTile[currentPlayerIndex] = playersHomeTile[homeIndex];
+
+        players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
+
+        tpPromptPanel.SetActive(false);
+    }
+
+    public void DeactiveTp()
+    {
+        tpPromptPanel.SetActive(false);
+        homePromptPanel.SetActive(true);
+    }
+
     public void Pass()
     {
         responded = true;
 
-        buffPassed = true;
+        tileEffectPassed = true;
 
         adPromptPanel.SetActive(false);
         movePromptPanel.SetActive(false);
+        homePromptPanel.SetActive(false);
     }
 
     IEnumerator movePlayer()
@@ -317,7 +377,7 @@ public class GameStateManager : MonoBehaviour {
 
                 responded = false;
 
-                if (!buffPassed)
+                if (!tileEffectPassed)
                 {
                     break;
                 }

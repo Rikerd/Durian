@@ -15,7 +15,7 @@ public class MSTile : BoardTile
 
     public override void tileEffect(PlayerStats player)
     {
-        if (player.movement < 3)
+        if (player.movement < player.maxMove)
         {
             buffPanel.SetActive(true);
         } else

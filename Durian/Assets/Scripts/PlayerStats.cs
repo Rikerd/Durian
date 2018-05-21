@@ -35,9 +35,21 @@ public class PlayerStats : MonoBehaviour {
         statLine.text = "HP: " + hp + " Atk: " + atk + " Def: " + def + " Move: " + movement;
     }
 
-    public void heal()
+    public void fullHeal()
     {
         hp = maxHp;
+    }
+
+    public void halfHeal()
+    {
+        if (hp + 2 > maxHp)
+        {
+            hp = maxHp;
+        }
+        else
+        {
+            hp += 2;
+        }
     }
 
     public void takeDamage(int dmg)
