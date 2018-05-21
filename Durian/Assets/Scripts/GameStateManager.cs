@@ -20,12 +20,14 @@ public class GameStateManager : MonoBehaviour {
     public GameObject lrPromptPanel;
 
     public GameObject adPromptPanel;
+
+    public GameObject movePromptPanel;
     
     // Game State
     [HideInInspector]
     public GameStates currentState;
 
-    private int currentPlayer;
+    private int currentPlayerIndex;
     private int numberedRolled;
     private bool coroutineStarted;
     private bool fightAccepted;
@@ -82,9 +84,9 @@ public class GameStateManager : MonoBehaviour {
                 
                 if (!coroutineStarted)
                 {
-                    currentPlayer = 0;
+                    currentPlayerIndex = 0;
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer(currentPlayer));
+                    StartCoroutine(movePlayer());
                 }
 
                 break;
@@ -96,9 +98,9 @@ public class GameStateManager : MonoBehaviour {
 
                 if (!coroutineStarted)
                 {
-                    currentPlayer = 1;
+                    currentPlayerIndex = 1;
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer(currentPlayer));
+                    StartCoroutine(movePlayer());
                 }
 
                 break;
@@ -110,9 +112,9 @@ public class GameStateManager : MonoBehaviour {
 
                 if (!coroutineStarted)
                 {
-                    currentPlayer = 2;
+                    currentPlayerIndex = 2;
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer(currentPlayer));
+                    StartCoroutine(movePlayer());
                 }
 
                 break;
@@ -124,9 +126,9 @@ public class GameStateManager : MonoBehaviour {
 
                 if (!coroutineStarted)
                 {
-                    currentPlayer = 3;
+                    currentPlayerIndex = 3;
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer(currentPlayer));
+                    StartCoroutine(movePlayer());
                 }
 
                 break;
@@ -199,7 +201,7 @@ public class GameStateManager : MonoBehaviour {
 
         buffPassed = false;
 
-        playersStats[currentPlayer].increaseAtk();
+        playersStats[currentPlayerIndex].increaseAtk();
 
         adPromptPanel.SetActive(false);
     }
@@ -210,9 +212,20 @@ public class GameStateManager : MonoBehaviour {
 
         buffPassed = false;
 
-        playersStats[currentPlayer].increaseDef();
+        playersStats[currentPlayerIndex].increaseDef();
 
         adPromptPanel.SetActive(false);
+    }
+
+    public void MoveBuff()
+    {
+        responded = true;
+
+        buffPassed = false;
+
+        playersStats[currentPlayerIndex].increaseMove();
+
+        movePromptPanel.SetActive(false);
     }
 
     public void Pass()
@@ -222,13 +235,14 @@ public class GameStateManager : MonoBehaviour {
         buffPassed = true;
 
         adPromptPanel.SetActive(false);
+        movePromptPanel.SetActive(false);
     }
 
-    IEnumerator movePlayer(int currentPlayerIndex)
+    IEnumerator movePlayer()
     {
         coroutineStarted = true;
 
-        for (int i = 0; i < numberedRolled; i++)
+        for (int i = 0; i < numberedRolled + playersStats[currentPlayerIndex].movement; i++)
         {
             BoardTile currentTile = playersCurrentTile[currentPlayerIndex].GetComponent<BoardTile>();
 
