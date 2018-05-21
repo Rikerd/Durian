@@ -15,8 +15,8 @@ public class NetworkedGameStateManager : NetworkBehaviour
 
     public Button rollDiceButton;
 
-    public GameObject combatPromptPanel;
-    public Text combatPromptText;
+    //public GameObject combatPromptPanel;
+    //public Text combatPromptText;
 
     // Game State
     //[HideInInspector]
@@ -26,8 +26,8 @@ public class NetworkedGameStateManager : NetworkBehaviour
     [SyncVar]
     private int numberedRolled;
     private bool coroutineStarted;
-    private bool fightAccepted;
-    private bool responded;
+    //private bool fightAccepted;
+    //private bool responded;
 
     public enum GameStates
     {
@@ -51,13 +51,13 @@ public class NetworkedGameStateManager : NetworkBehaviour
 
         numberRolledText.text = "Rolled: -";
 
-        combatPromptPanel.SetActive(false);
+        //combatPromptPanel.SetActive(false);
 
         coroutineStarted = false;
 
-        fightAccepted = false;
+        //fightAccepted = false;
 
-        responded = false;
+        //responded = false;
 
         networkedPlayers = GameObject.FindGameObjectsWithTag("NetworkedPlayer");
         print("Num of networked players: " + networkedPlayers.Length);
@@ -149,41 +149,19 @@ public class NetworkedGameStateManager : NetworkBehaviour
         if (currentState == GameStates.Player1Turn)
         {
             networkedPlayers[0].GetComponent<NetworkedPlayerController>().RollDice();
-            numberedRolled = networkedPlayers[0].GetComponent<NetworkedPlayerController>().rolledNum;
-            //currentState = GameStates.Player1Move;
         }
         else if (currentState == GameStates.Player2Turn)
         {
             networkedPlayers[1].GetComponent<NetworkedPlayerController>().RollDice();
-            numberedRolled = networkedPlayers[1].GetComponent<NetworkedPlayerController>().rolledNum;
-            //currentState = GameStates.Player2Move;
         }
         else if (currentState == GameStates.Player3Turn)
         {
             networkedPlayers[0].GetComponent<NetworkedPlayerController>().RollDice();
-            numberedRolled = networkedPlayers[0].GetComponent<NetworkedPlayerController>().rolledNum;
-            //currentState = GameStates.Player3Move;
         }
         else if (currentState == GameStates.Player4Turn)
         {
             networkedPlayers[1].GetComponent<NetworkedPlayerController>().RollDice();
-            numberedRolled = networkedPlayers[1].GetComponent<NetworkedPlayerController>().rolledNum;
-            //currentState = GameStates.Player4Move;
         }
-    }
-
-    public void FightAccepted()
-    {
-        responded = true;
-
-        fightAccepted = true;
-    }
-
-    public void FightDeclined()
-    {
-        responded = true;
-
-        fightAccepted = false;
     }
 
     IEnumerator movePlayer(int playerIndex)
@@ -193,25 +171,34 @@ public class NetworkedGameStateManager : NetworkBehaviour
 
         for (int i = 0; i < numberedRolled; i++)
         {
+            //networkedPlayers[playerIndex].GetComponent<NetworkedPlayerController>().isLocalPlayer
             playersCurrentTile[playerIndex] = playersCurrentTile[playerIndex].GetComponent<BoardTile>().NextBoardTiles[0];
             players[playerIndex].transform.position = playersCurrentTile[playerIndex].transform.position;
 
             foreach (GameObject player in players)
             {
+                int netPlayerIndex = 0;///TODO: GET RID OF
+                if (playerIndex == 1 || playerIndex == 3)
+                    netPlayerIndex = 1;
                 if (players[playerIndex].transform.position == player.transform.position && players[playerIndex] != player)
                 {
-                    combatPromptPanel.SetActive(true);
-                    combatPromptText.text = "fight " + player.name + "?";
+                    NetworkedPlayerController currentPlayerController = networkedPlayers[netPlayerIndex].GetComponent<NetworkedPlayerController>();
 
-                    while (!responded)
+                    if (currentPlayerController.isLocalPlayer)
+                    {
+                        currentPlayerController.combatPromptPanel.SetActive(true);
+                        currentPlayerController.combatPromptText.text = "fight " + player.name + "?";
+                    }
+
+                    while (!currentPlayerController.responded)
                     {
                         yield return null;
                     }
 
-                    responded = false;
-                    combatPromptPanel.SetActive(false);
+                    currentPlayerController.responded = false;
+                    currentPlayerController.combatPromptPanel.SetActive(false);
 
-                    if (fightAccepted)
+                    if (currentPlayerController.fightAccepted)
                     {
                         break;
                     }
