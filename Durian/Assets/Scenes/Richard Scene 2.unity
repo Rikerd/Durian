@@ -266,6 +266,7 @@ MonoBehaviour:
   - {fileID: 1690803713}
   homePanel: {fileID: 1760704384}
   healButton: {fileID: 398590657}
+  tpButton: {fileID: 54209163}
 --- !u!1 &12797524
 GameObject:
   m_ObjectHideFlags: 0
@@ -7481,6 +7482,7 @@ MonoBehaviour:
   - {fileID: 1541586671}
   homePanel: {fileID: 1760704384}
   healButton: {fileID: 398590657}
+  tpButton: {fileID: 54209163}
 --- !u!1 &1301813177 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1328939970840952, guid: b189e162142849a47afa63e30dda3436,
@@ -11087,6 +11089,7 @@ MonoBehaviour:
   - {fileID: 911553425}
   homePanel: {fileID: 1760704384}
   healButton: {fileID: 398590657}
+  tpButton: {fileID: 54209163}
 --- !u!1001 &1875760382
 Prefab:
   m_ObjectHideFlags: 0
@@ -11534,6 +11537,7 @@ MonoBehaviour:
   - {fileID: 398240548}
   homePanel: {fileID: 1760704384}
   healButton: {fileID: 398590657}
+  tpButton: {fileID: 54209163}
 --- !u!1001 &1966816788
 Prefab:
   m_ObjectHideFlags: 0

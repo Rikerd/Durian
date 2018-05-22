@@ -43,6 +43,7 @@ public class GameStateManager : MonoBehaviour {
     private int currentPlayerIndex;
     private int numberedRolled;
     private bool coroutineStarted;
+    private Coroutine moveCoroutine;
     private bool fightAccepted;
     private bool responded;
     private bool left;
@@ -123,7 +124,7 @@ public class GameStateManager : MonoBehaviour {
                 if (!coroutineStarted)
                 {
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer());
+                    moveCoroutine = StartCoroutine(movePlayer());
                 }
 
                 break;
@@ -144,7 +145,7 @@ public class GameStateManager : MonoBehaviour {
                 if (!coroutineStarted)
                 {
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer());
+                    moveCoroutine = StartCoroutine(movePlayer());
                 }
 
                 break;
@@ -165,7 +166,7 @@ public class GameStateManager : MonoBehaviour {
                 if (!coroutineStarted)
                 {
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer());
+                    moveCoroutine = StartCoroutine(movePlayer());
                 }
 
                 break;
@@ -186,18 +187,20 @@ public class GameStateManager : MonoBehaviour {
                 if (!coroutineStarted)
                 {
                     rollDiceButton.enabled = false;
-                    StartCoroutine(movePlayer());
+                    moveCoroutine = StartCoroutine(movePlayer());
                 }
 
                 break;
             case (GameStates.GameOver):
+                print("Game Over");
                 break;
         }
 	}
 
     public void RollDice()
     {
-        numberedRolled = Random.Range(1, 6);
+        //numberedRolled = Random.Range(1, 6);
+        numberedRolled = 6;
 
         if (currentState == GameStates.Player1Turn)
         {
@@ -411,6 +414,7 @@ public class GameStateManager : MonoBehaviour {
 
             if (fightAccepted)
             {
+                fightAccepted = false;
                 break;
             }
 
@@ -418,6 +422,14 @@ public class GameStateManager : MonoBehaviour {
 
             if ((newCurrentTile is ADTile) || (newCurrentTile is MSTile) || (newCurrentTile is HomeTile))
             {
+                if (playersCurrentTile[currentPlayerIndex] == playersHomeTile[currentPlayerIndex] && playersStats[currentPlayerIndex].holdingFlag)
+                {
+                    print("hi");
+                    currentState = GameStates.GameOver;
+                    StopCoroutine(moveCoroutine);
+                    break;
+                }
+
                 newCurrentTile.tileEffect(playersStats[currentPlayerIndex]);
 
                 while (!responded)
@@ -464,11 +476,11 @@ public class GameStateManager : MonoBehaviour {
                 newCurrentTile.tileEffect(playersStats[currentPlayerIndex]);
             }
 
+            print("still here");
             yield return new WaitForSeconds(0.2f);
         }
 
         coroutineStarted = false;
-
 
         if (currentState == GameStates.Player1Move)
         {
