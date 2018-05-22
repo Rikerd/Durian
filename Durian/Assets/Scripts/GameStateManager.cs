@@ -283,7 +283,7 @@ public class GameStateManager : MonoBehaviour {
 
         for (int i = 0; i < tpButtons.Length; i++)
         {
-            if (i == currentPlayerIndex)
+            if (playersCurrentTile[currentPlayerIndex] == playersHomeTile[i])
             {
                 tpButtons[i].enabled = false;
             } else
@@ -408,15 +408,15 @@ public class GameStateManager : MonoBehaviour {
                 }
             } else if (newCurrentTile is MonsterTile)
             {
-                int monsterAtk = Random.Range(1, 6) + 4;
-                //int monsterAtk = 1;
+                //int monsterAtk = Random.Range(1, 6) + 4;
+                int monsterAtk = 1;
 
                 playersStats[currentPlayerIndex].takeDamage(monsterAtk);
 
                 if (playersStats[currentPlayerIndex].hp > 0)
                 {
-                    int monsterDef = Random.Range(1, 6) + 4;
-                    //int monsterDef = 1;
+                    //int monsterDef = Random.Range(1, 6) + 4;
+                    int monsterDef = 1;
 
                     int playerAtk = Random.Range(1, 6) + playersStats[currentPlayerIndex].atk;
 
