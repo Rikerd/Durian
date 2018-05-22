@@ -59,7 +59,6 @@ public class GameStateManager : MonoBehaviour {
         Player3Move,
         Player4Turn,
         Player4Move,
-        Combat,
         GameOver
     }
 
@@ -108,6 +107,14 @@ public class GameStateManager : MonoBehaviour {
                 currentState = GameStates.Player1Turn;
                 break;
             case (GameStates.Player1Turn):
+                currentPlayerIndex = 0;
+
+                if (playersStats[currentPlayerIndex].isDead())
+                {
+                    playersStats[currentPlayerIndex].increaseDeathTimer();
+                    currentState = GameStates.Player2Turn;
+                }
+
                 rollDiceButton.enabled = true;
                 break;
             case (GameStates.Player1Move):
@@ -115,13 +122,20 @@ public class GameStateManager : MonoBehaviour {
                 
                 if (!coroutineStarted)
                 {
-                    currentPlayerIndex = 0;
                     rollDiceButton.enabled = false;
                     StartCoroutine(movePlayer());
                 }
 
                 break;
             case (GameStates.Player2Turn):
+                currentPlayerIndex = 1;
+
+                if (playersStats[currentPlayerIndex].isDead())
+                {
+                    playersStats[currentPlayerIndex].increaseDeathTimer();
+                    currentState = GameStates.Player3Turn;
+                }
+
                 rollDiceButton.enabled = true;
                 break;
             case (GameStates.Player2Move):
@@ -129,13 +143,20 @@ public class GameStateManager : MonoBehaviour {
 
                 if (!coroutineStarted)
                 {
-                    currentPlayerIndex = 1;
                     rollDiceButton.enabled = false;
                     StartCoroutine(movePlayer());
                 }
 
                 break;
             case (GameStates.Player3Turn):
+                currentPlayerIndex = 2;
+
+                if (playersStats[currentPlayerIndex].isDead())
+                {
+                    playersStats[currentPlayerIndex].increaseDeathTimer();
+                    currentState = GameStates.Player4Turn;
+                }
+
                 rollDiceButton.enabled = true;
                 break;
             case (GameStates.Player3Move):
@@ -143,13 +164,20 @@ public class GameStateManager : MonoBehaviour {
 
                 if (!coroutineStarted)
                 {
-                    currentPlayerIndex = 2;
                     rollDiceButton.enabled = false;
                     StartCoroutine(movePlayer());
                 }
 
                 break;
             case (GameStates.Player4Turn):
+                currentPlayerIndex = 3;
+
+                if (playersStats[currentPlayerIndex].isDead())
+                {
+                    playersStats[currentPlayerIndex].increaseDeathTimer();
+                    currentState = GameStates.Player1Turn;
+                }
+
                 rollDiceButton.enabled = true;
                 break;
             case (GameStates.Player4Move):
@@ -157,13 +185,10 @@ public class GameStateManager : MonoBehaviour {
 
                 if (!coroutineStarted)
                 {
-                    currentPlayerIndex = 3;
                     rollDiceButton.enabled = false;
                     StartCoroutine(movePlayer());
                 }
 
-                break;
-            case (GameStates.Combat):
                 break;
             case (GameStates.GameOver):
                 break;
