@@ -39,6 +39,8 @@ public class GameStateManager : MonoBehaviour {
 
     public GameObject battleLogPanel;
     public Text battleLogText;
+
+    public Text currentTurn;
     
     // Game State
     [HideInInspector]
@@ -106,6 +108,8 @@ public class GameStateManager : MonoBehaviour {
                 flagSpot.material = unavaliableFlagMat;
             }
         }
+
+        currentTurn.text = "Player " + (currentPlayerIndex + 1) + " turn";
 
 		switch (currentState)
         {
@@ -318,10 +322,10 @@ public class GameStateManager : MonoBehaviour {
         {
             if (playersCurrentTile[currentPlayerIndex] == playersHomeTile[i])
             {
-                tpButtons[i].enabled = false;
+                tpButtons[i].interactable = false;
             } else
             {
-                tpButtons[i].enabled = true;
+                tpButtons[i].interactable = true;
             }
         }
     }
