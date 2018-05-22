@@ -125,14 +125,14 @@ public class GameStateManager : MonoBehaviour {
                     currentState = GameStates.Player2Turn;
                 }
 
-                rollDiceButton.enabled = true;
+                rollDiceButton.interactable = true;
                 break;
             case (GameStates.Player1Move):
                 numberRolledText.text = "Rolled: " + numberedRolled;
                 
                 if (!coroutineStarted)
                 {
-                    rollDiceButton.enabled = false;
+                    rollDiceButton.interactable = false;
                     moveCoroutine = StartCoroutine(movePlayer());
                 }
 
@@ -146,14 +146,14 @@ public class GameStateManager : MonoBehaviour {
                     currentState = GameStates.Player3Turn;
                 }
 
-                rollDiceButton.enabled = true;
+                rollDiceButton.interactable = true;
                 break;
             case (GameStates.Player2Move):
                 numberRolledText.text = "Rolled: " + numberedRolled;
 
                 if (!coroutineStarted)
                 {
-                    rollDiceButton.enabled = false;
+                    rollDiceButton.interactable = false;
                     moveCoroutine = StartCoroutine(movePlayer());
                 }
 
@@ -167,14 +167,14 @@ public class GameStateManager : MonoBehaviour {
                     currentState = GameStates.Player4Turn;
                 }
 
-                rollDiceButton.enabled = true;
+                rollDiceButton.interactable = true;
                 break;
             case (GameStates.Player3Move):
                 numberRolledText.text = "Rolled: " + numberedRolled;
 
                 if (!coroutineStarted)
                 {
-                    rollDiceButton.enabled = false;
+                    rollDiceButton.interactable = false;
                     moveCoroutine = StartCoroutine(movePlayer());
                 }
 
@@ -188,14 +188,14 @@ public class GameStateManager : MonoBehaviour {
                     currentState = GameStates.Player1Turn;
                 }
 
-                rollDiceButton.enabled = true;
+                rollDiceButton.interactable = true;
                 break;
             case (GameStates.Player4Move):
                 numberRolledText.text = "Rolled: " + numberedRolled;
 
                 if (!coroutineStarted)
                 {
-                    rollDiceButton.enabled = false;
+                    rollDiceButton.interactable = false;
                     moveCoroutine = StartCoroutine(movePlayer());
                 }
 

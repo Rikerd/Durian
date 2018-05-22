@@ -27,20 +27,20 @@ public class HomeTile : BoardTile
 
             if (player.hp >= player.maxHp)
             {
-                healButton.enabled = false;
+                healButton.interactable = false;
             }
             else
             {
-                healButton.enabled = true;
+                healButton.interactable = true;
             }
 
             if (player.holdingFlag)
             {
-                tpButton.enabled = false;
+                tpButton.interactable = false;
             }
             else
             {
-                tpButton.enabled = true;
+                tpButton.interactable = true;
             }
         }
     }
