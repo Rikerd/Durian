@@ -36,6 +36,9 @@ public class GameStateManager : MonoBehaviour {
     public GameObject tpPromptPanel;
 
     public Button[] tpButtons;
+
+    public GameObject battleLogPanel;
+    public Text battleLogText;
     
     // Game State
     [HideInInspector]
@@ -402,26 +405,96 @@ public class GameStateManager : MonoBehaviour {
 
                     if (fightAccepted)
                     {
-                        playersStats[defendingIndex].takeDamage(calculateDamage(currentPlayerIndex, defendingIndex));
+                        int atkRoll;
+                        int defRoll;
+                        int dmgTaken;
+
+                        battleLogPanel.SetActive(true);
+                        battleLogText.text = "";
+
+                        atkRoll = Random.Range(1, 6);
+
+                        battleLogText.text += players[currentPlayerIndex].name + " attacks w/ " + atkRoll.ToString() + " + " + playersStats[currentPlayerIndex].atk.ToString();
+
+                        yield return new WaitForSeconds(1f);
+
+                        defRoll = Random.Range(1, 6);
+
+                        battleLogText.text += players[defendingIndex].name + " defends w/ " + defRoll.ToString() + " + " + playersStats[defendingIndex].def.ToString();
+
+                        yield return new WaitForSeconds(1f);
+
+                        dmgTaken = (atkRoll + playersStats[currentPlayerIndex].atk) - (defRoll + playersStats[defendingIndex].def);
+
+                        if (dmgTaken <= 0)
+                        {
+                            dmgTaken = 1;
+                        }
+
+                        battleLogText.text += players[defendingIndex].name + " takes " + dmgTaken.ToString() + " damage";
+
+                        yield return new WaitForSeconds(1f);
+
+                        playersStats[defendingIndex].takeDamage(dmgTaken);
+
 
                         if (!playersStats[defendingIndex].isDead())
                         {
-                            playersStats[currentPlayerIndex].takeDamage(calculateDamage(defendingIndex, currentPlayerIndex));
+                            atkRoll = Random.Range(1, 6);
+
+                            battleLogText.text += players[defendingIndex].name + " attacks w/ " + atkRoll.ToString() + " + " + playersStats[defendingIndex].atk.ToString();
+
+                            yield return new WaitForSeconds(1f);
+
+                            defRoll = Random.Range(1, 6);
+
+                            battleLogText.text += players[currentPlayerIndex].name + " defends w/ " + defRoll.ToString() + " + " + playersStats[currentPlayerIndex].def.ToString();
+
+                            yield return new WaitForSeconds(1f);
+
+                            dmgTaken = (atkRoll + playersStats[defendingIndex].atk) - (defRoll + playersStats[currentPlayerIndex].def);
+
+                            if (dmgTaken <= 0)
+                            {
+                                dmgTaken = 1;
+                            }
+
+                            battleLogText.text += players[currentPlayerIndex].name + " takes " + dmgTaken.ToString() + " damage";
+
+                            yield return new WaitForSeconds(1f);
+
+                            playersStats[currentPlayerIndex].takeDamage(dmgTaken);
+
+                            if (playersStats[currentPlayerIndex].isDead())
+                            {
+                                battleLogText.text += players[currentPlayerIndex].name + " died!";
+
+                                yield return new WaitForSeconds(1f);
+                            }
 
                             if (playersStats[currentPlayerIndex].isDead() && playersStats[currentPlayerIndex].holdingFlag)
                             {
+                                battleLogText.text += players[defendingIndex].name + " has taken the flag!";
+
                                 playersStats[currentPlayerIndex].holdingFlag = false;
                                 playersStats[defendingIndex].holdingFlag = true;
                             }
                         } else
                         {
+                            battleLogText.text += players[defendingIndex].name + " died!";
+
+                            yield return new WaitForSeconds(1f);
+
                             if (playersStats[defendingIndex].holdingFlag)
                             {
+                                battleLogText.text += players[currentPlayerIndex].name + " has taken the flag!";
+
                                 playersStats[currentPlayerIndex].holdingFlag = true;
                                 playersStats[defendingIndex].holdingFlag = false;
                             }
                         }
-                        
+
+                        yield return new WaitForSeconds(3f);
 
                         break;
                     }
@@ -549,6 +622,7 @@ public class GameStateManager : MonoBehaviour {
     private int calculateDamage(int atkPlayerIndex, int defPlayerIndex)
     {
         int atkRoll = Random.Range(1, 6) + playersStats[atkPlayerIndex].atk;
+
         int defRoll = Random.Range(1, 6) + playersStats[defPlayerIndex].def;
 
         int dmgTaken = atkRoll - defRoll;
