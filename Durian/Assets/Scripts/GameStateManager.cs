@@ -8,6 +8,7 @@ public class GameStateManager : MonoBehaviour {
     public PlayerStats[] playersStats;
     public GameObject[] playersCurrentTile;
     public GameObject[] playersHomeTile;
+    public GameObject[] secondaryMonsterTiles;
 
     public Renderer flag;
     public Material avaliableFlagMat;
@@ -48,6 +49,7 @@ public class GameStateManager : MonoBehaviour {
     private bool responded;
     private bool left;
     private bool tileEffectPassed;
+    private bool secondaryMonsterCheck;
 
     public enum GameStates
     {
@@ -438,7 +440,6 @@ public class GameStateManager : MonoBehaviour {
             {
                 if (playersCurrentTile[currentPlayerIndex] == playersHomeTile[currentPlayerIndex] && playersStats[currentPlayerIndex].holdingFlag)
                 {
-                    print("hi");
                     currentState = GameStates.GameOver;
                     StopCoroutine(moveCoroutine);
                     break;
@@ -457,7 +458,8 @@ public class GameStateManager : MonoBehaviour {
                 {
                     break;
                 }
-            } else if (newCurrentTile is MonsterTile)
+            }
+            else if (newCurrentTile is MonsterTile)
             {
                 //int monsterAtk = Random.Range(1, 6) + 4;
                 int monsterAtk = 1;
@@ -478,19 +480,49 @@ public class GameStateManager : MonoBehaviour {
 
                         break;
                     }
-                } else
+                }
+                else
                 {
-                    playersCurrentTile[currentPlayerIndex] = currentTile.gameObject;
-                    players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
+                    foreach (GameObject secondaryMonsterTile in secondaryMonsterTiles)
+                    {
+                        if (playersCurrentTile[currentPlayerIndex] == secondaryMonsterTile)
+                        {
+                            playersCurrentTile[currentPlayerIndex] = currentTile.NextBoardTiles[0];
+                            players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
+
+                            secondaryMonsterCheck = true;
+
+                            if (playersStats[currentPlayerIndex].holdingFlag)
+                            {
+                                playersStats[currentPlayerIndex].holdingFlag = false;
+
+                                FlagStatus.FlagAvaliable = true;
+                            }
+
+                            break;
+                        }
+                    }
+
+                    if (!secondaryMonsterCheck)
+                    {
+                        playersCurrentTile[currentPlayerIndex] = currentTile.gameObject;
+                        players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
+                    }
+
+                    secondaryMonsterCheck = false;
 
                     break;
                 }
-            } else if (!(newCurrentTile is LUTile) && !(newCurrentTile is LRTile))
+            } else if (newCurrentTile is FlagTile) {
+                newCurrentTile.tileEffect(playersStats[currentPlayerIndex]);
+
+                break;
+            }
+            else if (!(newCurrentTile is LUTile) && !(newCurrentTile is LRTile))
             {
                 newCurrentTile.tileEffect(playersStats[currentPlayerIndex]);
             }
-
-            print("still here");
+            
             yield return new WaitForSeconds(0.2f);
         }
 

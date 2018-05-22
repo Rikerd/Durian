@@ -9193,6 +9193,11 @@ MonoBehaviour:
   - {fileID: 1964697030}
   - {fileID: 7813679}
   - {fileID: 1853031069}
+  secondaryMonsterTiles:
+  - {fileID: 532341324}
+  - {fileID: 1608395254}
+  - {fileID: 1835980534}
+  - {fileID: 1952089513}
   flag: {fileID: 1182052050}
   avaliableFlagMat: {fileID: 2100000, guid: f0f51dcac0af874449ef171d23d60da6, type: 2}
   unavaliableFlagMat: {fileID: 2100000, guid: 402ddc38df5160643865f2ee300ea357, type: 2}
