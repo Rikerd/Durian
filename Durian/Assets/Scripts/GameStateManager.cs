@@ -204,8 +204,8 @@ public class GameStateManager : MonoBehaviour {
 
     public void RollDice()
     {
-        //numberedRolled = Random.Range(1, 6);
-        numberedRolled = 6;
+        numberedRolled = Random.Range(1, 6);
+        //numberedRolled = 6;
 
         if (currentState == GameStates.Player1Turn)
         {
@@ -420,7 +420,7 @@ public class GameStateManager : MonoBehaviour {
 
                         defRoll = Random.Range(1, 6);
 
-                        battleLogText.text += players[defendingIndex].name + " defends w/ " + defRoll.ToString() + " + " + playersStats[defendingIndex].def.ToString();
+                        battleLogText.text += "\n" + players[defendingIndex].name + " defends w/ " + defRoll.ToString() + " + " + playersStats[defendingIndex].def.ToString();
 
                         yield return new WaitForSeconds(1f);
 
@@ -431,7 +431,7 @@ public class GameStateManager : MonoBehaviour {
                             dmgTaken = 1;
                         }
 
-                        battleLogText.text += players[defendingIndex].name + " takes " + dmgTaken.ToString() + " damage";
+                        battleLogText.text += "\n" + players[defendingIndex].name + " takes " + dmgTaken.ToString() + " damage";
 
                         yield return new WaitForSeconds(1f);
 
@@ -442,13 +442,13 @@ public class GameStateManager : MonoBehaviour {
                         {
                             atkRoll = Random.Range(1, 6);
 
-                            battleLogText.text += players[defendingIndex].name + " attacks w/ " + atkRoll.ToString() + " + " + playersStats[defendingIndex].atk.ToString();
+                            battleLogText.text += "\n" + players[defendingIndex].name + " attacks w/ " + atkRoll.ToString() + " + " + playersStats[defendingIndex].atk.ToString();
 
                             yield return new WaitForSeconds(1f);
 
                             defRoll = Random.Range(1, 6);
 
-                            battleLogText.text += players[currentPlayerIndex].name + " defends w/ " + defRoll.ToString() + " + " + playersStats[currentPlayerIndex].def.ToString();
+                            battleLogText.text += "\n" + players[currentPlayerIndex].name + " defends w/ " + defRoll.ToString() + " + " + playersStats[currentPlayerIndex].def.ToString();
 
                             yield return new WaitForSeconds(1f);
 
@@ -459,7 +459,7 @@ public class GameStateManager : MonoBehaviour {
                                 dmgTaken = 1;
                             }
 
-                            battleLogText.text += players[currentPlayerIndex].name + " takes " + dmgTaken.ToString() + " damage";
+                            battleLogText.text += "\n" + players[currentPlayerIndex].name + " takes " + dmgTaken.ToString() + " damage";
 
                             yield return new WaitForSeconds(1f);
 
@@ -467,27 +467,27 @@ public class GameStateManager : MonoBehaviour {
 
                             if (playersStats[currentPlayerIndex].isDead())
                             {
-                                battleLogText.text += players[currentPlayerIndex].name + " died!";
+                                battleLogText.text += "\n" + players[currentPlayerIndex].name + " died!";
 
                                 yield return new WaitForSeconds(1f);
                             }
 
                             if (playersStats[currentPlayerIndex].isDead() && playersStats[currentPlayerIndex].holdingFlag)
                             {
-                                battleLogText.text += players[defendingIndex].name + " has taken the flag!";
+                                battleLogText.text += "\n" + players[defendingIndex].name + " has taken the flag!";
 
                                 playersStats[currentPlayerIndex].holdingFlag = false;
                                 playersStats[defendingIndex].holdingFlag = true;
                             }
                         } else
                         {
-                            battleLogText.text += players[defendingIndex].name + " died!";
+                            battleLogText.text += "\n" + players[defendingIndex].name + " died!";
 
                             yield return new WaitForSeconds(1f);
 
                             if (playersStats[defendingIndex].holdingFlag)
                             {
-                                battleLogText.text += players[currentPlayerIndex].name + " has taken the flag!";
+                                battleLogText.text += "\n" + players[currentPlayerIndex].name + " has taken the flag!";
 
                                 playersStats[currentPlayerIndex].holdingFlag = true;
                                 playersStats[defendingIndex].holdingFlag = false;
@@ -495,6 +495,8 @@ public class GameStateManager : MonoBehaviour {
                         }
 
                         yield return new WaitForSeconds(3f);
+
+                        battleLogPanel.SetActive(false);
 
                         break;
                     }
@@ -534,28 +536,70 @@ public class GameStateManager : MonoBehaviour {
             }
             else if (newCurrentTile is MonsterTile)
             {
-                //int monsterAtk = Random.Range(1, 6) + 4;
-                int monsterAtk = 1;
+                battleLogPanel.SetActive(true);
+                battleLogText.text = "";
 
-                playersStats[currentPlayerIndex].takeDamage(monsterAtk);
+                int monsterAtk = Random.Range(1, 6);
+                //int monsterAtk = 1;
+
+                battleLogText.text += "Monster attacks w/ " + monsterAtk.ToString() + " + 4";
+
+                yield return new WaitForSeconds(1f);
+
+                int playerDef = Random.Range(1, 6);
+
+                battleLogText.text += "\n" + players[currentPlayerIndex].name + " defends w/ " + playerDef.ToString() + " + " + playersStats[currentPlayerIndex].def;
+
+                int dmgTaken = (monsterAtk + 4) + (playerDef + playersStats[currentPlayerIndex].def);
+
+                if (dmgTaken <= 0)
+                {
+                    dmgTaken = 1;
+                }
+
+                battleLogText.text += "\n" + players[currentPlayerIndex].name + " takes " + dmgTaken.ToString() + " damage";
+
+                yield return new WaitForSeconds(1f);
+
+                playersStats[currentPlayerIndex].takeDamage(dmgTaken);
 
                 if (playersStats[currentPlayerIndex].hp > 0)
                 {
-                    //int monsterDef = Random.Range(1, 6) + 4;
-                    int monsterDef = 1;
+                    int monsterDef = Random.Range(1, 6);
+                    //int monsterDef = 1;
+
+                    battleLogText.text += "\nMonster defends w/ " + monsterDef.ToString() + " + 4";
+
+                    yield return new WaitForSeconds(1f);
 
                     int playerAtk = Random.Range(1, 6) + playersStats[currentPlayerIndex].atk;
 
+                    battleLogText.text += "\n" + players[currentPlayerIndex].name + " attacks w/ " + playerAtk.ToString() + " + " + playersStats[currentPlayerIndex].atk;
+
+                    yield return new WaitForSeconds(1f);
+
                     if (monsterDef > playerAtk)
                     {
+                        battleLogText.text += "\n" + players[currentPlayerIndex].name + " loses!";
+                        yield return new WaitForSeconds(3f);
+                        battleLogPanel.SetActive(false);
                         playersCurrentTile[currentPlayerIndex] = currentTile.gameObject;
                         players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
 
                         break;
+                    } else
+                    {
+                        battleLogText.text += "\n" + players[currentPlayerIndex].name + " wins!";
+                        yield return new WaitForSeconds(3f);
+                        battleLogPanel.SetActive(false);
                     }
                 }
                 else
                 {
+                    battleLogText.text += "\n" + players[currentPlayerIndex].name + " died!";
+                    yield return new WaitForSeconds(3f);
+                    battleLogPanel.SetActive(false);
+
                     foreach (GameObject secondaryMonsterTile in secondaryMonsterTiles)
                     {
                         if (playersCurrentTile[currentPlayerIndex] == secondaryMonsterTile)
@@ -586,6 +630,7 @@ public class GameStateManager : MonoBehaviour {
 
                     break;
                 }
+
             } else if (newCurrentTile is FlagTile) {
                 newCurrentTile.tileEffect(playersStats[currentPlayerIndex]);
 
