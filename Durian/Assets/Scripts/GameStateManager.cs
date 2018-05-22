@@ -402,10 +402,24 @@ public class GameStateManager : MonoBehaviour {
                     {
                         playersStats[defendingIndex].takeDamage(calculateDamage(currentPlayerIndex, defendingIndex));
 
-                        if (playersStats[defendingIndex].hp >= 0)
+                        if (!playersStats[defendingIndex].isDead())
                         {
                             playersStats[currentPlayerIndex].takeDamage(calculateDamage(defendingIndex, currentPlayerIndex));
+
+                            if (playersStats[currentPlayerIndex].isDead() && playersStats[currentPlayerIndex].holdingFlag)
+                            {
+                                playersStats[currentPlayerIndex].holdingFlag = false;
+                                playersStats[defendingIndex].holdingFlag = true;
+                            }
+                        } else
+                        {
+                            if (playersStats[defendingIndex].holdingFlag)
+                            {
+                                playersStats[currentPlayerIndex].holdingFlag = true;
+                                playersStats[defendingIndex].holdingFlag = false;
+                            }
                         }
+                        
 
                         break;
                     }
