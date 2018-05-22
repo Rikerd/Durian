@@ -385,7 +385,7 @@ public class GameStateManager : MonoBehaviour {
             players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
 
             for (int defendingIndex = 0; defendingIndex < players.Length; defendingIndex++) {
-                if (players[currentPlayerIndex].transform.position == players[defendingIndex].transform.position && currentPlayerIndex != defendingIndex)
+                if (players[currentPlayerIndex].transform.position == players[defendingIndex].transform.position && currentPlayerIndex != defendingIndex && !playersStats[defendingIndex].isDead())
                 {
                     combatPromptPanel.SetActive(true);
                     combatPromptText.text = "fight " + players[defendingIndex].name + "?";
