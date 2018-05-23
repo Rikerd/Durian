@@ -7,17 +7,41 @@ public class HomeTile : BoardTile
 {
     public GameObject homePanel;
     public Button healButton;
+    public Button tpButton;
+
+    private GameStateManager gm;
+
+    private void Start()
+    {
+        gm = GameObject.Find("Game Manager").GetComponent<GameStateManager>();
+    }
 
     public override void tileEffect(PlayerStats player)
     {
-        homePanel.SetActive(true);
-
-        if (player.hp >= player.maxHp)
+        if (player.hp >= player.maxHp && player.holdingFlag)
         {
-            healButton.enabled = false;
+            gm.Pass();
         } else
         {
-            healButton.enabled = true;
+            homePanel.SetActive(true);
+
+            if (player.hp >= player.maxHp)
+            {
+                healButton.interactable = false;
+            }
+            else
+            {
+                healButton.interactable = true;
+            }
+
+            if (player.holdingFlag)
+            {
+                tpButton.interactable = false;
+            }
+            else
+            {
+                tpButton.interactable = true;
+            }
         }
     }
 }

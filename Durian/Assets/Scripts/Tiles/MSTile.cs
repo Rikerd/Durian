@@ -15,12 +15,12 @@ public class MSTile : BoardTile
 
     public override void tileEffect(PlayerStats player)
     {
-        if (player.movement < player.maxMove)
-        {
-            buffPanel.SetActive(true);
-        } else
+        if (player.movement >= player.maxMove || player.holdingFlag)
         {
             gm.Pass();
+        } else
+        {
+            buffPanel.SetActive(true);
         }
     }
 }

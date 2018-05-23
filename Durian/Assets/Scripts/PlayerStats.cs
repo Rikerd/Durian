@@ -27,6 +27,8 @@ public class PlayerStats : MonoBehaviour {
     [HideInInspector]
     public bool holdingFlag;
 
+    private int deathTimer;
+
     // Use this for initialization
     void Start () {
         hp = 5;
@@ -34,11 +36,12 @@ public class PlayerStats : MonoBehaviour {
         def = 0;
         movement = 0;
         holdingFlag = false;
+        deathTimer = 0;
 	}
 
     private void Update()
     {
-        statLine.text = "HP: " + hp + " Atk: " + atk + " Def: " + def + " Move: " + movement;
+        statLine.text = "HP: " + hp + "/5\nAtk: " + atk + "\nDef: " + def + "/4\nMove: " + movement + "/3";
 
         if (holdingFlag)
         {
@@ -100,5 +103,21 @@ public class PlayerStats : MonoBehaviour {
     public void releaseFlag()
     {
         holdingFlag = false;
+    }
+
+    public bool isDead()
+    {
+        return hp <= 0;
+    }
+
+    public void increaseDeathTimer()
+    {
+        deathTimer++;
+
+        if (deathTimer >= 2)
+        {
+            hp = 5;
+            deathTimer = 0;
+        }
     }
 }

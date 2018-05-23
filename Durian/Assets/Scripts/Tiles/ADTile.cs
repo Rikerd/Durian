@@ -7,16 +7,30 @@ public class ADTile : BoardTile {
     public GameObject buffPanel;
     public Button defButton;
 
+    private GameStateManager gm;
+
+    private void Start()
+    {
+        gm = GameObject.Find("Game Manager").GetComponent<GameStateManager>();
+    }
+
     public override void tileEffect(PlayerStats player)
     {
-        buffPanel.SetActive(true);
-
-        if (player.def >= player.maxDef)
+        if (player.holdingFlag)
         {
-            defButton.enabled = false;
+            gm.Pass();
         } else
         {
-            defButton.enabled = true;
+            buffPanel.SetActive(true);
+
+            if (player.def >= player.maxDef)
+            {
+                defButton.enabled = false;
+            }
+            else
+            {
+                defButton.enabled = true;
+            }
         }
     }
 }
