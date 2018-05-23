@@ -41,7 +41,7 @@ public class PlayerStats : MonoBehaviour {
 
     private void Update()
     {
-        statLine.text = "HP: " + hp + "\nAtk: " + atk + "\nDef: " + def + "\nMove: " + movement;
+        statLine.text = "HP: " + hp + "/5\nAtk: " + atk + "\nDef: " + def + "/4\nMove: " + movement + "/3";
 
         if (holdingFlag)
         {

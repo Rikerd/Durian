@@ -40,7 +40,12 @@ public class GameStateManager : MonoBehaviour {
     public GameObject battleLogPanel;
     public Text battleLogText;
 
+    public GameObject gameOverPanel;
+    public Text gameOverText;
+
     public Text currentTurn;
+
+    public GameObject extraStatPanel;
     
     // Game State
     [HideInInspector]
@@ -55,6 +60,7 @@ public class GameStateManager : MonoBehaviour {
     private bool left;
     private bool tileEffectPassed;
     private bool secondaryMonsterCheck;
+    private int killingPlayerIndex;
 
     public enum GameStates
     {
@@ -296,6 +302,33 @@ public class GameStateManager : MonoBehaviour {
         movePromptPanel.SetActive(false);
     }
 
+    public void ExtraAtkBuff()
+    {
+        responded = true;
+
+        playersStats[killingPlayerIndex].increaseAtk();
+
+        extraStatPanel.SetActive(false);
+    }
+
+    public void ExtraDefBuff()
+    {
+        responded = true;
+
+        playersStats[killingPlayerIndex].increaseDef();
+
+        extraStatPanel.SetActive(false);
+    }
+
+    public void ExtraMoveBuff()
+    {
+        responded = true;
+
+        playersStats[killingPlayerIndex].increaseMove();
+
+        extraStatPanel.SetActive(false);
+    }
+
     public void Heal()
     {
         responded = true;
@@ -502,6 +535,30 @@ public class GameStateManager : MonoBehaviour {
 
                         battleLogPanel.SetActive(false);
 
+                        if (playersStats[defendingIndex].isDead())
+                        {
+                            extraStatPanel.SetActive(true);
+                            killingPlayerIndex = defendingIndex;
+
+                            while (!responded)
+                            {
+                                yield return null;
+                            }
+
+                            responded = false;
+                        } else if (playersStats[currentPlayerIndex].isDead())
+                        {
+                            extraStatPanel.SetActive(true);
+                            killingPlayerIndex = currentPlayerIndex;
+
+                            while (!responded)
+                            {
+                                yield return null;
+                            }
+
+                            responded = false;
+                        }
+
                         break;
                     }
                 }
@@ -520,6 +577,11 @@ public class GameStateManager : MonoBehaviour {
                 if (playersCurrentTile[currentPlayerIndex] == playersHomeTile[currentPlayerIndex] && playersStats[currentPlayerIndex].holdingFlag)
                 {
                     currentState = GameStates.GameOver;
+
+                    gameOverPanel.SetActive(true);
+
+                    gameOverText.text = players[currentPlayerIndex].name + "wins!";
+
                     StopCoroutine(moveCoroutine);
                     break;
                 }
