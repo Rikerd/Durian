@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4424758743634888}
   - component: {fileID: 114288807139298772}
+  - component: {fileID: 114957664624791598}
+  - component: {fileID: 114176174942756084}
   m_Layer: 0
   m_Name: AD Buff
   m_TagString: Untagged
@@ -126,6 +128,38 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114176174942756084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1180755728738130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 192
+    i1: 35
+    i2: 168
+    i3: 147
+    i4: 215
+    i5: 241
+    i6: 29
+    i7: 228
+    i8: 136
+    i9: 135
+    i10: 44
+    i11: 192
+    i12: 129
+    i13: 30
+    i14: 235
+    i15: 31
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114288807139298772
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,3 +175,15 @@ MonoBehaviour:
   - {fileID: 0}
   buffPanel: {fileID: 0}
   defButton: {fileID: 0}
+--- !u!114 &114957664624791598
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1180755728738130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c69c3c69814d6a48940b20679f4610f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NextBoardTiles: []

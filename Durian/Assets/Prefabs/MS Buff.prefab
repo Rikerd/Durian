@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4210537977306824}
   - component: {fileID: 114328490222529552}
+  - component: {fileID: 114882141503988768}
   m_Layer: 0
   m_Name: MS Buff
   m_TagString: Untagged
@@ -135,6 +136,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0945afa15c12554b91ab9ee07e42366, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NextBoardTiles: []
+  buffPanel: {fileID: 0}
+--- !u!114 &114882141503988768
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1696337409821354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4977c70afc29bac4abbc9e8d319f9773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   NextBoardTiles: []

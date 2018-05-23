@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4345840064264094}
   - component: {fileID: 114492306780165222}
+  - component: {fileID: 114082393564677158}
+  - component: {fileID: 114129703349186838}
   m_Layer: 0
   m_Name: Flag Split
   m_TagString: Untagged
@@ -126,6 +128,50 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114082393564677158
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1023124112737784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6be41cb505d79b43b3a6e1d8daea0fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NextBoardTiles: []
+--- !u!114 &114129703349186838
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1023124112737784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 138
+    i1: 114
+    i2: 129
+    i3: 175
+    i4: 11
+    i5: 51
+    i6: 22
+    i7: 228
+    i8: 170
+    i9: 158
+    i10: 64
+    i11: 61
+    i12: 134
+    i13: 46
+    i14: 31
+    i15: 82
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!114 &114492306780165222
 MonoBehaviour:
   m_ObjectHideFlags: 1

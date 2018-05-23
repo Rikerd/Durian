@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4051193650789074}
   - component: {fileID: 114790093280676098}
+  - component: {fileID: 114694405818578310}
+  - component: {fileID: 114477955621387392}
   m_Layer: 0
   m_Name: Home Split
   m_TagString: Untagged
@@ -126,6 +128,50 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114477955621387392
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1554479687235228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 37
+    i1: 183
+    i2: 78
+    i3: 246
+    i4: 103
+    i5: 147
+    i6: 171
+    i7: 132
+    i8: 75
+    i9: 125
+    i10: 112
+    i11: 45
+    i12: 114
+    i13: 247
+    i14: 60
+    i15: 133
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &114694405818578310
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1554479687235228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b061bfcdca1e93947b7ddacb5449ea46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NextBoardTiles: []
 --- !u!114 &114790093280676098
 MonoBehaviour:
   m_ObjectHideFlags: 1
