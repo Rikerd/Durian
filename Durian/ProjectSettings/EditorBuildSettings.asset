@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/Title Screen.unity
+    guid: b38fcd1437b11a7439774bf807df49e7
+  - enabled: 1
+    path: Assets/Scenes/Richard Scene 2.unity
+    guid: 051938dea426582468119908e1ccd9a6
+  - enabled: 1
     path: Assets/Scenes/Crystal Scene.unity
     guid: f7a84c3e089038343bf8261fe44f6c52
   - enabled: 0

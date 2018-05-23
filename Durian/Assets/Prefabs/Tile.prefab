@@ -20,8 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4873952507110642}
   - component: {fileID: 114001785260385620}
-  - component: {fileID: 114762372038907882}
-  - component: {fileID: 114364475333652266}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -137,50 +135,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1be24146e31105c479ac07518d2dc458, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NextBoardTiles: []
---- !u!114 &114364475333652266
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1328939970840952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 177
-    i1: 137
-    i2: 225
-    i3: 98
-    i4: 20
-    i5: 40
-    i6: 73
-    i7: 164
-    i8: 122
-    i9: 250
-    i10: 99
-    i11: 227
-    i12: 13
-    i13: 218
-    i14: 52
-    i15: 54
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
---- !u!114 &114762372038907882
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1328939970840952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 974fd095ac269d6479ad27d1ca3f6881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   NextBoardTiles: []

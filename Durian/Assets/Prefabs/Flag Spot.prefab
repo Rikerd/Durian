@@ -20,8 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4187912045632240}
   - component: {fileID: 114033031332002414}
-  - component: {fileID: 114563869006454522}
-  - component: {fileID: 114863777061542982}
   m_Layer: 0
   m_Name: Flag Spot
   m_TagString: Untagged
@@ -141,47 +139,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NextBoardTiles:
   - {fileID: 0}
---- !u!114 &114563869006454522
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1111108315006674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59688896b7f19e24e9d4ee728ad4250f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NextBoardTiles: []
---- !u!114 &114863777061542982
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1111108315006674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 154
-    i1: 34
-    i2: 253
-    i3: 112
-    i4: 144
-    i5: 194
-    i6: 182
-    i7: 164
-    i8: 233
-    i9: 49
-    i10: 145
-    i11: 218
-    i12: 90
-    i13: 21
-    i14: 245
-    i15: 34
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0

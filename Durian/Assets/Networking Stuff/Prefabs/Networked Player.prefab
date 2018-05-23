@@ -2123,7 +2123,7 @@ MonoBehaviour:
   luPromptPanel: {fileID: 1790361205739546}
   lrPromptPanel: {fileID: 1562114434915346}
   adPromptPanel: {fileID: 1958990812131366}
-  movePromptPanel: {fileID: 1782122519978732}
+  msPromptPanel: {fileID: 0}
   responded: 0
   fightAccepted: 0
   left: 0

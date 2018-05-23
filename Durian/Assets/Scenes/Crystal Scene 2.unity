@@ -322,10 +322,12 @@ MonoBehaviour:
   maxHp: 5
   maxDef: 0
   maxMove: 0
+  flag: {fileID: 0}
   hp: 0
   atk: 0
   def: 0
   movement: 0
+  holdingFlag: 0
 --- !u!114 &82308318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2274,10 +2276,12 @@ MonoBehaviour:
   maxHp: 5
   maxDef: 0
   maxMove: 0
+  flag: {fileID: 0}
   hp: 0
   atk: 0
   def: 0
   movement: 0
+  holdingFlag: 0
 --- !u!114 &1153211904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3088,6 +3092,7 @@ MonoBehaviour:
   networkedPlayers: []
   numberRolledText: {fileID: 1184705761}
   rollDiceButton: {fileID: 1732165661}
+  statLines: []
   currentState: 0
 --- !u!1 &1571826377 stripped
 GameObject:
@@ -3377,10 +3382,12 @@ MonoBehaviour:
   maxHp: 5
   maxDef: 0
   maxMove: 0
+  flag: {fileID: 0}
   hp: 0
   atk: 0
   def: 0
   movement: 0
+  holdingFlag: 0
 --- !u!114 &1729712548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3806,10 +3813,12 @@ MonoBehaviour:
   maxHp: 5
   maxDef: 0
   maxMove: 0
+  flag: {fileID: 0}
   hp: 0
   atk: 0
   def: 0
   movement: 0
+  holdingFlag: 0
 --- !u!114 &1756931123
 MonoBehaviour:
   m_ObjectHideFlags: 0

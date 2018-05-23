@@ -38,8 +38,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4795527409134922}
   - component: {fileID: 114192564385954608}
-  - component: {fileID: 114125221786289230}
-  - component: {fileID: 114398394376656738}
   m_Layer: 0
   m_Name: Monster Tile
   m_TagString: Untagged
@@ -128,18 +126,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114125221786289230
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1563718575851482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1149925730a9ac4fbb3c1a79c34a5ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NextBoardTiles: []
 --- !u!114 &114192564385954608
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,35 +139,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NextBoardTiles:
   - {fileID: 0}
---- !u!114 &114398394376656738
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1563718575851482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 141
-    i1: 177
-    i2: 158
-    i3: 71
-    i4: 198
-    i5: 158
-    i6: 8
-    i7: 180
-    i8: 89
-    i9: 190
-    i10: 187
-    i11: 26
-    i12: 185
-    i13: 138
-    i14: 104
-    i15: 94
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
