@@ -14,6 +14,7 @@ public class NetworkedGameStateManager : NetworkBehaviour
     public Text numberRolledText;
     public Button rollDiceButton;
     public Text[] statLines;
+    public Text currentTurn;
 
     //public GameObject combatPromptPanel;
     //public Text combatPromptText;
@@ -25,7 +26,8 @@ public class NetworkedGameStateManager : NetworkBehaviour
 
     [SyncVar]
     private int numberedRolled;
-    private bool coroutineStarted;
+    [SyncVar]
+    public bool coroutineStarted;
     //private int currentPlayerIndex;
     //private bool fightAccepted;
     //private bool responded;
@@ -48,6 +50,8 @@ public class NetworkedGameStateManager : NetworkBehaviour
     // Use this for initialization
     void Start()
     {
+        print("Setting up Game Manager...");
+
         currentState = GameStates.PregameSetting;
 
         numberRolledText.text = "Rolled: -";
@@ -68,7 +72,7 @@ public class NetworkedGameStateManager : NetworkBehaviour
     void Update()
     {
         //Getting all networked players
-        if (networkedPlayers.Length != 2) //TODO: change so that it's 4
+        if (networkedPlayers.Length != 4)
         {
             networkedPlayers = GameObject.FindGameObjectsWithTag("NetworkedPlayer");
             print("Num of networked players: " + networkedPlayers.Length);
@@ -87,22 +91,21 @@ public class NetworkedGameStateManager : NetworkBehaviour
         for (int playerIndex = 0; playerIndex < statLines.Length; playerIndex++)
         {
             //print("playerIndex: " + playerIndex);
-            int netPlayerIndex = 0;///TODO: GET RID OF AND MAKE JUST FLAT OUT playerIndex
-            if (playerIndex == 1 || playerIndex == 3)///
-                netPlayerIndex = 1;///
-            NetworkedPlayerStats stats = networkedPlayers[netPlayerIndex].GetComponent<NetworkedPlayerController>().playersStats;
-            //print("HP: " + stats.hp + " Atk: " + stats.atk + " Def: " + stats.def + " Move: " + stats.movement);
-            //print(statLines[playerIndex]);
-            //print(statLines[playerIndex].text);
-            statLines[playerIndex].text = "HP: " + stats.hp + " Atk: " + stats.atk + " Def: " + stats.def + " Move: " + stats.movement;
+            //int netPlayerIndex = 0;///TODO: GET RID OF AND MAKE JUST FLAT OUT playerIndex
+            //if (playerIndex == 1 || playerIndex == 3)///
+            //    netPlayerIndex = 1;///
+            //NetworkedPlayerStats stats = networkedPlayers[netPlayerIndex].GetComponent<NetworkedPlayerController>().playersStats;
+            NetworkedPlayerStats stats = networkedPlayers[playerIndex].GetComponent<NetworkedPlayerController>().playersStats;
+            statLines[playerIndex].text = "HP: " + stats.hp + "\nAtk: " + stats.atk + "\nDef: " + stats.def + "\nMove: " + stats.movement;
         }
 
-
+        print("currentState: " + currentState);
         //Setting up the current gameState
         switch (currentState)
         {
             case (GameStates.PregameSetting):
                 currentState = GameStates.Player1Turn;
+                currentTurn.text = "Player 1 turn";
                 break;
             case (GameStates.Player1Turn):
                 rollDiceButton.enabled = true;
@@ -119,6 +122,7 @@ public class NetworkedGameStateManager : NetworkBehaviour
                 break;
             case (GameStates.Player2Turn):
                 rollDiceButton.enabled = true;
+                currentTurn.text = "Player 2 turn";
                 break;
             case (GameStates.Player2Move):
                 numberRolledText.text = "Rolled: " + numberedRolled;
@@ -132,6 +136,7 @@ public class NetworkedGameStateManager : NetworkBehaviour
                 break;
             case (GameStates.Player3Turn):
                 rollDiceButton.enabled = true;
+                currentTurn.text = "Player 3 turn";
                 break;
             case (GameStates.Player3Move):
                 numberRolledText.text = "Rolled: " + numberedRolled;
@@ -145,6 +150,7 @@ public class NetworkedGameStateManager : NetworkBehaviour
                 break;
             case (GameStates.Player4Turn):
                 rollDiceButton.enabled = true;
+                currentTurn.text = "Player 4 turn";
                 break;
             case (GameStates.Player4Move):
                 numberRolledText.text = "Rolled: " + numberedRolled;
@@ -177,27 +183,34 @@ public class NetworkedGameStateManager : NetworkBehaviour
         }
         else if (currentState == GameStates.Player3Turn)
         {
-            networkedPlayers[0].GetComponent<NetworkedPlayerController>().RollDice();
+            networkedPlayers[2].GetComponent<NetworkedPlayerController>().RollDice();
         }
         else if (currentState == GameStates.Player4Turn)
         {
-            networkedPlayers[1].GetComponent<NetworkedPlayerController>().RollDice();
+            networkedPlayers[3].GetComponent<NetworkedPlayerController>().RollDice();
         }
     }
 
     IEnumerator movePlayer(int playerIndex)
     {
-        int netPlayerIndex = 0;///TODO: GET RID OF AND MAKE JUST FLAT OUT playerIndex
-        if (playerIndex == 1 || playerIndex == 3)///
-            netPlayerIndex = 1;///
-        NetworkedPlayerController currentPlayerController = networkedPlayers[netPlayerIndex].GetComponent<NetworkedPlayerController>();
+        print(currentState + " - Player" + (playerIndex + 1) + " Moving: " + numberedRolled);
 
-        print(currentState + " - Player" + (playerIndex+1) + " Moving: " + numberedRolled);
+        //int netPlayerIndex = 0;///TODO: GET RID OF AND MAKE JUST FLAT OUT playerIndex
+        //if (playerIndex == 1 || playerIndex == 3)///
+        //    netPlayerIndex = 1;///
+        //NetworkedPlayerController currentPlayerController = networkedPlayers[netPlayerIndex].GetComponent<NetworkedPlayerController>();
+        NetworkedPlayerController currentPlayerController = networkedPlayers[playerIndex].GetComponent<NetworkedPlayerController>();
+
         coroutineStarted = true;
 
         for (int i = 0; i < numberedRolled; i++)
         {
             BoardTileNetworked currentTile = playersCurrentTile[playerIndex].GetComponent<BoardTileNetworked>();
+            print(currentTile);
+            //currentPlayerController.responded = false;
+            //currentPlayerController.left = false;
+            //currentPlayerController.fightAccepted = false;
+            //currentPlayerController.tileEffectPassed = false;
 
             if (currentTile.NextBoardTiles.Length > 1)
             {
@@ -232,7 +245,7 @@ public class NetworkedGameStateManager : NetworkBehaviour
             {
                 playersCurrentTile[playerIndex] = currentTile.NextBoardTiles[0];
             }
-
+            print("1");
             players[playerIndex].transform.position = playersCurrentTile[playerIndex].transform.position;
 
             foreach (GameObject player in players)
@@ -265,15 +278,16 @@ public class NetworkedGameStateManager : NetworkBehaviour
                     }
                 }
             }
-
+            print("2");
             if (currentPlayerController.fightAccepted)
             {
                 print("fightAccepted");
+                coroutineStarted = false;
                 break;
             }
-
+            print("3");
             BoardTileNetworked newCurrentTile = playersCurrentTile[playerIndex].GetComponent<BoardTileNetworked>();
-
+            print("4");
             if (!(newCurrentTile is LUTileNetworked) && !(newCurrentTile is LRTileNetworked) && !(newCurrentTile is BlankTileNetworked))
             {
                 print("Current Player isLocal: " + currentPlayerController.isLocalPlayer);
@@ -300,10 +314,11 @@ public class NetworkedGameStateManager : NetworkBehaviour
                 if (!currentPlayerController.tileEffectPassed)
                 {
                     print("Breaking...");
+                    coroutineStarted = false;
                     break;
                 }
             }
-
+            print("5");
             yield return new WaitForSeconds(0.2f);
         }
 
@@ -345,21 +360,25 @@ public class NetworkedGameStateManager : NetworkBehaviour
             case (GameStates.PregameSetting):
                 currentState = GameStates.Player1Turn;
                 break;
-            case (GameStates.Player1Turn): //TODO: FIX THE INDEXES
+            case (GameStates.Player1Turn):
                 currentState = GameStates.Player1Move;
+                coroutineStarted = false;
                 numberedRolled = networkedPlayers[0].GetComponent<NetworkedPlayerController>().rolledNum;
                 break;
             case (GameStates.Player2Turn):
                 currentState = GameStates.Player2Move;
+                coroutineStarted = false;
                 numberedRolled = networkedPlayers[1].GetComponent<NetworkedPlayerController>().rolledNum;
                 break;
             case (GameStates.Player3Turn):
                 currentState = GameStates.Player3Move;
-                numberedRolled = networkedPlayers[0].GetComponent<NetworkedPlayerController>().rolledNum;
+                coroutineStarted = false;
+                numberedRolled = networkedPlayers[2].GetComponent<NetworkedPlayerController>().rolledNum;
                 break;
             case (GameStates.Player4Turn):
                 currentState = GameStates.Player4Move;
-                numberedRolled = networkedPlayers[1].GetComponent<NetworkedPlayerController>().rolledNum;
+                coroutineStarted = false;
+                numberedRolled = networkedPlayers[3].GetComponent<NetworkedPlayerController>().rolledNum;
                 break;
         }
         print("currentState now: " + currentState);

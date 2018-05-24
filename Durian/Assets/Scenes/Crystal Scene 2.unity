@@ -3092,7 +3092,12 @@ MonoBehaviour:
   networkedPlayers: []
   numberRolledText: {fileID: 1184705761}
   rollDiceButton: {fileID: 1732165661}
-  statLines: []
+  statLines:
+  - {fileID: 1878068082}
+  - {fileID: 1353702765}
+  - {fileID: 1658360446}
+  - {fileID: 564107217}
+  currentTurn: {fileID: 0}
   currentState: 0
 --- !u!1 &1571826377 stripped
 GameObject:

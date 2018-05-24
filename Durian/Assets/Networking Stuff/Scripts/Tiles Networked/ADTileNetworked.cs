@@ -8,6 +8,7 @@ public class ADTileNetworked : BoardTileNetworked
 
     public override void tileEffect(NetworkedPlayerController player)
     {
+        print("tile activated");
         player.adPromptPanel.SetActive(true);
 
         if (player.playersStats.def >= player.playersStats.maxDef)

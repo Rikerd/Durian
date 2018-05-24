@@ -48,12 +48,12 @@ public class NetworkedPlayerController : NetworkBehaviour
 
     public void RollDice()
     {
-        //print(netId + " is local player: " + isLocalPlayer);
+        print(netId + " is local player: " + isLocalPlayer);
         if (!isLocalPlayer)
             return;
 
         int roll = Random.Range(1, 6);
-        //print("roll is: " + roll);
+        print("roll is: " + roll);
         CmdSetNumberedRolled(roll);
     }
 
@@ -87,7 +87,6 @@ public class NetworkedPlayerController : NetworkBehaviour
         print("Moved Left");
 
         responded = true;
-
         left = true;
 
         RpcMoveLeft();
@@ -102,7 +101,6 @@ public class NetworkedPlayerController : NetworkBehaviour
         print("Client Moved Left");
 
         responded = true;
-
         left = true;
     }
 
@@ -112,7 +110,6 @@ public class NetworkedPlayerController : NetworkBehaviour
         print("Moved Up or Right");
 
         responded = true;
-
         left = false;
 
         RpcMoveUpOrRight();
@@ -127,7 +124,6 @@ public class NetworkedPlayerController : NetworkBehaviour
         print("Client Moved Up or Right");
 
         responded = true;
-
         left = false;
     }
 
@@ -137,7 +133,6 @@ public class NetworkedPlayerController : NetworkBehaviour
         print("Attack Buff Obtained");
 
         responded = true;
-
         tileEffectPassed = false;
 
         //playersStats.increaseAtk();
@@ -160,7 +155,6 @@ public class NetworkedPlayerController : NetworkBehaviour
     {
         print("Defense Buff Obtained");
         responded = true;
-
         tileEffectPassed = false;
 
         //playersStats.increaseDef();
@@ -183,7 +177,6 @@ public class NetworkedPlayerController : NetworkBehaviour
     {
         print("Move Buff Obtained");
         responded = true;
-
         tileEffectPassed = false;
 
         playersStats.movement += 1;

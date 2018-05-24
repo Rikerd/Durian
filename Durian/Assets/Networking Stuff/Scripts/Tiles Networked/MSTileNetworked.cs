@@ -13,11 +13,12 @@ public class MSTileNetworked : BoardTileNetworked
 
     public override void tileEffect(NetworkedPlayerController player)
     {
+        player.msPromptPanel.SetActive(true);
 
         if (player.playersStats.movement < player.playersStats.maxMove)
         {
             //buffPanel.SetActive(true);
-            player.msPromptPanel.SetActive(true);
+            //player.msPromptPanel.SetActive(true);
         }
         else
         {
