@@ -47,6 +47,8 @@ public class GameStateManager : MonoBehaviour {
 
     public GameObject extraStatPanel;
     
+	public GameObject sounds;
+
     // Game State
     [HideInInspector]
     public GameStates currentState;
@@ -214,8 +216,9 @@ public class GameStateManager : MonoBehaviour {
 
     public void RollDice()
     {
+		sounds.GetComponentInChildren<DiceSFXPlayer> ().DiceRollSound ();
         numberedRolled = Random.Range(1, 6);
-        //numberedRolled = 6;
+        //numberedRolled = 6; 
 
         if (currentState == GameStates.Player1Turn)
         {
@@ -277,7 +280,7 @@ public class GameStateManager : MonoBehaviour {
 
         playersStats[currentPlayerIndex].increaseAtk();
 
-        adPromptPanel.SetActive(false);
+        adPromptPanel.SetActive(false); 
     }
 
     public void DefBuff()
@@ -374,6 +377,8 @@ public class GameStateManager : MonoBehaviour {
         players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
 
         tpPromptPanel.SetActive(false);
+
+		sounds.GetComponent<SFXPlayer> ().LevelUpSound ();
     }
 
     public void DeactiveTp()
@@ -396,6 +401,7 @@ public class GameStateManager : MonoBehaviour {
     IEnumerator movePlayer()
     {
         coroutineStarted = true;
+		yield return new WaitForSeconds(1f);
 
         for (int i = 0; i < numberedRolled + playersStats[currentPlayerIndex].movement; i++)
         {
@@ -425,6 +431,7 @@ public class GameStateManager : MonoBehaviour {
             }
 
             players[currentPlayerIndex].transform.position = playersCurrentTile[currentPlayerIndex].transform.position;
+			sounds.GetComponent<SFXPlayer> ().TapSound ();
 
             for (int defendingIndex = 0; defendingIndex < players.Length; defendingIndex++) {
                 if (players[currentPlayerIndex].transform.position == players[defendingIndex].transform.position && currentPlayerIndex != defendingIndex && !playersStats[defendingIndex].isDead())
@@ -442,6 +449,8 @@ public class GameStateManager : MonoBehaviour {
 
                     if (fightAccepted)
                     {
+						sounds.GetComponent<SFXPlayer> ().FightSound ();
+
                         int atkRoll;
                         int defRoll;
                         int dmgTaken;
@@ -602,6 +611,8 @@ public class GameStateManager : MonoBehaviour {
             }
             else if (newCurrentTile is MonsterTile)
             {
+				sounds.GetComponent<SFXPlayer> ().MonsterSound ();
+
                 battleLogPanel.SetActive(true);
                 battleLogText.text = "";
 
@@ -616,7 +627,7 @@ public class GameStateManager : MonoBehaviour {
 
                 battleLogText.text += "\n" + players[currentPlayerIndex].name + " defends w/ " + playerDef.ToString() + " + " + playersStats[currentPlayerIndex].def;
 
-                int dmgTaken = (monsterAtk + 4) + (playerDef + playersStats[currentPlayerIndex].def);
+                int dmgTaken = (monsterAtk + 4) - (playerDef + playersStats[currentPlayerIndex].def);
 
                 if (dmgTaken <= 0)
                 {

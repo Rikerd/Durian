@@ -27,6 +27,8 @@ public class PlayerStats : MonoBehaviour {
     [HideInInspector]
     public bool holdingFlag;
 
+	public GameObject sounds;
+
     private int deathTimer;
 
     // Use this for initialization
@@ -41,7 +43,7 @@ public class PlayerStats : MonoBehaviour {
 
     private void Update()
     {
-        statLine.text = "HP: " + hp + "/5\nAtk: " + atk + "\nDef: " + def + "/4\nMove: " + movement + "/3";
+        statLine.text = "HP: " + hp + "/5\nAtk: " + atk + "/5\nDef: " + def + "/4\nMove: " + movement + "/3";
 
         if (holdingFlag)
         {
@@ -55,6 +57,8 @@ public class PlayerStats : MonoBehaviour {
     public void fullHeal()
     {
         hp = maxHp;
+
+		sounds.GetComponent<SFXPlayer> ().LevelUpSound ();
     }
 
     public void halfHeal()
@@ -67,6 +71,8 @@ public class PlayerStats : MonoBehaviour {
         {
             hp += 2;
         }
+
+		sounds.GetComponent<SFXPlayer> ().LevelUpSound ();
     }
 
     public void takeDamage(int dmg)
@@ -83,21 +89,29 @@ public class PlayerStats : MonoBehaviour {
     public void increaseAtk()
     {
         atk++;
+
+		sounds.GetComponent<SFXPlayer> ().LevelUpSound ();
     }
 
     public void increaseDef()
     {
         def++;
+
+		sounds.GetComponent<SFXPlayer> ().LevelUpSound ();
     }
 
     public void increaseMove()
     {
         movement++;
+
+		sounds.GetComponent<SFXPlayer> ().LevelUpSound ();
     }
 
     public void grabFlag()
     {
         holdingFlag = true;
+
+		sounds.GetComponent<SFXPlayer> ().FlagSound ();
     }
 
     public void releaseFlag()
